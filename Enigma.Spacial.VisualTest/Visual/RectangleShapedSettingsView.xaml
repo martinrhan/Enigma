@@ -1,0 +1,44 @@
+﻿<ContentControl x:Name="view"
+    x:Class="Enigma.Spacial.TestWPF.Visual.RectangleShapedSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+    <StackPanel>
+        <Grid Height="30" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Column="0" Grid.Row="0">
+                <TextBlock>P0:</TextBlock>
+                <local:Vector2InputBox></local:Vector2InputBox>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.Row="0">
+                <TextBlock>P1:</TextBlock>
+                <TextBlock></TextBlock>
+            </DockPanel>
+            <DockPanel Grid.Column="0" Grid.Row="1">
+                <TextBlock>P2:</TextBlock>
+                <TextBlock></TextBlock>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.Row="1">
+                <TextBlock>P3:</TextBlock>
+                <TextBlock></TextBlock>
+            </DockPanel>
+        </Grid>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Left">RotateBy</TextBlock>
+            <Button DockPanel.Dock="Right">Invoke</Button>
+            <TextBlock DockPanel.Dock="Right">Pi</TextBlock>
+            <TextBox></TextBox>
+        </DockPanel>
+    </StackPanel>
+</ContentControl>

@@ -1,0 +1,15 @@
+{
+  "BuiltInInputActionBindings": {
+    "MoveLeft": "A",
+    "MoveRight": "D",
+    "MoveUp": "W",
+    "MoveDown": "S",
+    "MoveToPointerPosition": "MouseRight",
+    "CastAtPointerPosition": "MouseLeft",
+    "EnemyWaveManager": "Oem3",
+    "Inventory": "I",
+    "CenterCameraAtPlayerGameBody": "Space",
+    "Exit": "Escape"
+  },
+  "SelectAbilityInputActionBindings": ["Q","E","R","F"]
+}

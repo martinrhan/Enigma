@@ -1,0 +1,14 @@
+﻿<v:View x:TypeArguments="local:ControlViewModel"
+             x:Class="Enigma.GameWPF.Visual.Settings.ControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
+             xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Settings"
+             xmlns:local_="clr-namespace:Enigma.GameWPF.Visual.Settings.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding ViewModel, Mode=OneWay, RelativeSource={RelativeSource Self}}">
+    <local_:InputBindingsView ViewModel="{Binding InputBindingsViewModel}"></local_:InputBindingsView>
+</v:View>

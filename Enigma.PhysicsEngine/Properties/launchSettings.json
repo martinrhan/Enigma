@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Enigma.PhysicsEngine": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

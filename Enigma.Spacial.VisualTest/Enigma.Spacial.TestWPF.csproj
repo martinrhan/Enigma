@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigma.Common.WPF\Enigma.Common.WPF.csproj" />
+    <ProjectReference Include="..\Enigma.Common\Enigma.Common.csproj" />
+    <ProjectReference Include="..\Enigma.Spacial\Enigma.Spacial.csproj" />
+    <ProjectReference Include="..\ExtendedWPF\ExtendedWPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Compile Update="**\*ViewModel.cs">
+	  <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

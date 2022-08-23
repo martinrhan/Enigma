@@ -1,0 +1,46 @@
+[
+  {
+    "Id": "ChargeSlash",
+    "Price": 10,
+    "Size": 1,
+    "Rarity": "Common",
+    "AbilityEffectAssemblyTemplate": {
+      "PhaseTemplateList": [
+        {
+          "StageTemplateList": [
+            {
+              "UpdateComponentDataList": [
+                {
+                  "Id": "p0s0UpdateCharge",
+                  "FactoryId": "Charge"
+                }
+              ],
+              "CancelComponentDataList": [],
+              "CompleteComponentDataList": [
+                {
+                  "Id": "p0s0CompleteCircularSectorAreaDamage",
+                  "FactoryId": "CircularSectorAreaDamage",
+                  "InvokeArgumentDataSourceInfoList": [
+                    {
+                      "SourceComponentId": "p0s0UpdateCharge",
+                      "SourcePropertyId": "ChargedTime",
+                      "InExpressionId": "chargedTime"
+                    }
+                  ],
+                  "InvokeArgumentMetadataList": [
+                    {
+                      "ArgumentId": "Stength",
+                      "ConvertExpression": "5 * chargedTime"
+                    }
+                  ]
+                }
+              ],
+              "MaxTime": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+
+]

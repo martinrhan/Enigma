@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "ProtectorMinion",
+    "AbilityCollection": [],
+    "AIGameBodyBehaviourFactoryId": "ProtectorMinion",
+    "Properties": {
+      "MaxHP": 300,
+      "Speed": 200,
+      "Radius": 8
+    }
+  }
+]

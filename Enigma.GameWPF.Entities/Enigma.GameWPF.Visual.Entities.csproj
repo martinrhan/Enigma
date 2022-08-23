@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+	<EnableDynamicLoading>true</EnableDynamicLoading>
+	<UseWPF>true</UseWPF>
+	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigma.GameWPF\Enigma.GameWPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Compile Update="**\*ViewModel.cs">
+	  <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
+	</Compile>
+  </ItemGroup>
+
+</Project>

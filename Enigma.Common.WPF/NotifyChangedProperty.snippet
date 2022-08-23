@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+	<Header>
+	  <Title>NotifyChangedProperty</Title>
+	  <Author>EnigmaDev</Author>
+	  <Description>Create a property that call the NotifyPropertyChanged method when set.</Description>
+	  <Shortcut>propnc</Shortcut>
+	</Header>
+	<Snippet>
+	  <Code Language="CSharp" Kind="method decl">
+		<![CDATA[
+	private $Type$ $PrivateIdentifier$;
+    public $Type$ $Identifier$ {
+        get { return $PrivateIdentifier$; }
+        set { 
+            $PrivateIdentifier$ = value;
+            NotifyPropertyChanged();
+        }
+    }
+]]>
+	  </Code>
+	  <Declarations>
+		<Literal>
+		  <ID>Type</ID>
+		  <ToolTip>The type of the property.</ToolTip>
+		  <Default>void</Default>
+		</Literal>
+		<Literal>
+		  <ID>Identifier</ID>
+		  <ToolTip>The identifier of the property.</ToolTip>
+		  <Default>Identifier</Default>
+		</Literal>
+		<Literal>
+		  <ID>PrivateIdentifier</ID>
+		  <ToolTip>The identifier of the private field.</ToolTip>
+		  <Default>identifier</Default>
+		</Literal>
+	  </Declarations>
+	</Snippet>
+  </CodeSnippet>
+</CodeSnippets>

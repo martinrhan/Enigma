@@ -1,0 +1,21 @@
+﻿<ContentControl x:Name="view"
+    x:Class="Enigma.Spacial.TestWPF.Visual.CircleShapedSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
+             xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+    <StackPanel>
+        <DockPanel>
+            <TextBlock>Radius</TextBlock>
+            <TextBox Width="100" HorizontalAlignment="Right" Text=""></TextBox>
+        </DockPanel>
+        <DockPanel>
+            <TextBlock>Center</TextBlock>
+            <local:Vector2InputBox Width="150" HorizontalAlignment="Right"></local:Vector2InputBox>
+        </DockPanel>
+    </StackPanel>
+</ContentControl>

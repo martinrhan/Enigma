@@ -1,0 +1,28 @@
+[
+  {
+    "Id": "MinionCrowd",
+    "Rarity": "Common",
+    "EnemyWaveBehaviourFactoryId": "GeneralCrowd",
+    "AIGameBodyTemplatePools": [
+      {
+        "SetExpression": "Minion",
+        "RollCount": 1
+      }
+    ]
+  },
+  {
+    "Id": "HalfProtectorMinionCrowd",
+    "Rarity": "Common",
+    "EnemyWaveBehaviourFactoryId": "GeneralCrowd",
+    "AIGameBodyTemplatePools": [
+      {
+        "SetExpression": "Minion n Protector",
+        "RollCount": 1
+      },
+      {
+        "SetExpression": "Minion x Protector",
+        "RollCount": 1
+      }
+    ]
+  }
+]

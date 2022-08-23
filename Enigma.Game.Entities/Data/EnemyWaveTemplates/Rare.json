@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "RareWave",
+    "Rarity": "Rare",
+    "EnemyWaveBehaviourFactoryId": "GeneralCrowd",
+    "AIGameBodyTemplatePools": [
+      {
+        "SetExpression": "Minion"
+      }
+    ]
+  }
+]

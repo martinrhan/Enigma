@@ -1,0 +1,44 @@
+﻿<Page x:Class="Enigma.GameWPF.Visual.SettingsPage" x:Name="page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:p="clr-namespace:Enigma.GameWPF.Properties"
+      xmlns:v_s="clr-namespace:Enigma.GameWPF.Visual.Settings"
+      xmlns:local="clr-namespace:Enigma.GameWPF.Visual"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      ShowsNavigationUI="False" Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{x:Static p:Resources.Back}" Height="100" Width="100" Click="Button_Back_Click" Margin="10,10,10,340"/>
+        <Button Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="{x:Static p:Resources.Save}" Height="100" Width="100" Click="Button_Save_Click" Margin="10,340,10,10"/>
+        <TabControl x:Name="tabControl" Grid.Column="1" Background="White" BorderBrush="{x:Null}">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="BorderBrush" Value="{x:Null}"/>
+                </Style>
+            </TabControl.Resources>
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <DockPanel>
+                        <UniformGrid IsItemsHost="True" Rows="1" DockPanel.Dock="Top"/>
+                        <ContentPresenter ContentSource="SelectedContent"/>
+                    </DockPanel>
+                </ControlTemplate>
+            </TabControl.Template>
+            <TabItem Header="{x:Static p:Resources.Interface}">
+                <v_s:InterfaceView ViewModel="{Binding InterfaceViewModel, ElementName=page, Mode=OneTime}"/>
+            </TabItem>
+            <TabItem Header="{x:Static p:Resources.Control}">
+                <v_s:ControlView ViewModel="{Binding ControlViewModel, ElementName=page, Mode=OneTime}"/>
+            </TabItem>
+            <TabItem Header="{x:Static p:Resources.Graphics}">
+                <v_s:GraphicsView ViewModel="{Binding GraphicsViewModel, ElementName=page, Mode=OneTime}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
