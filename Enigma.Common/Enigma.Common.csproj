@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="ViewModel.cs">
+      <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

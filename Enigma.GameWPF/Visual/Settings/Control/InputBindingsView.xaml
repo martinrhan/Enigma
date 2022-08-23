@@ -1,0 +1,41 @@
+﻿<v:View x:TypeArguments="local:InputBindingsViewModel" x:Name="view"
+    x:Class="Enigma.GameWPF.Visual.Settings.Control.InputBindingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
+             xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Settings.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" IsTabStop="False">
+    <StackPanel>
+        <ItemsControl ItemsSource="{Binding ViewModel.BuiltInInputActionViewModels,ElementName=view,Mode=OneWay}" IsTabStop="False">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:InputActionView ViewModel="{Binding}"></local:InputActionView>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding ViewModel.SelectAbilityInputActionViewModels,ElementName=view}" IsTabStop="False">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Content="X" Click="Button_RemoveInputAction_Click"></Button>
+                        <local:InputActionView ViewModel="{Binding}"></local:InputActionView>
+                    </DockPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Content="+" Click="Button_AddInputAction_Click"></Button>
+    </StackPanel>
+</v:View>

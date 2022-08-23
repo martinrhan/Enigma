@@ -1,0 +1,13 @@
+[
+  {
+    "Id": "StandardProjectile",
+    "AbilityCollection": [
+    ],
+    "AIGameBodyBehaviourFactoryId": "StandardProjectile",
+    "Properties": {
+      "MaxHP": 1,
+      "Speed": 300,
+      "Radius": 5
+    }
+  }
+]

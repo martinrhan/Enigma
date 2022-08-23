@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFramework>net6.0</TargetFramework>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\Enigma.Game.SourceGenerator\Enigma.Game.SourceGenerator.csproj" OutputItemType="Analyzer" />
+	<ProjectReference Include="..\TestSourceGenerator\TestSourceGenerator.csproj" OutputItemType="Analyzer" />
+	<ProjectReference Include="..\Enigma.PhysicsEngine\Enigma.PhysicsEngine.csproj" />
+  </ItemGroup>
+  
+</Project>

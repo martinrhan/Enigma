@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "MythicWave",
+    "Rarity": "Mythic",
+    "EnemyWaveBehaviourFactoryId": "GeneralCrowd",
+    "AIGameBodyTemplatePools": [
+      {
+        "SetExpression": "Minion"
+      }
+    ]
+  }
+]

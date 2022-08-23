@@ -1,0 +1,24 @@
+﻿<v:View x:TypeArguments="local:GameBodyViewModel" x:Name="view"
+    x:Class="Enigma.GameWPF.Visual.Game.GameBodyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
+             xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Game"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100" Focusable="False"
+            Width="{Binding ViewModel.Width,ElementName=view}"
+            Height="{Binding ViewModel.Height,ElementName=view}"
+        >
+    <Control.Template>
+        <ControlTemplate TargetType="ContentControl">
+            <Ellipse x:Name="ellipse" Stroke="Black" StrokeThickness="1"></Ellipse>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding ViewModel.IsEmpty, ElementName=view}" Value="True">
+                    <Setter TargetName="ellipse" Property="Visibility" Value="Hidden"></Setter>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Control.Template>
+</v:View>

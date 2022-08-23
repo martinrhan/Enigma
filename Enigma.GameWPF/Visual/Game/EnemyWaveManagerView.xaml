@@ -1,0 +1,18 @@
+﻿<v:View x:TypeArguments="local:EnemyWaveManagerViewModel" x:Name="view"
+    x:Class="Enigma.GameWPF.Visual.Game.EnemyWaveManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
+             xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Game"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Focusable="False">
+    <DockPanel Background="White" Focusable="False">
+        <TextBlock DockPanel.Dock="Top" Text="Available Enemy Wave Selections" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Orientation="Horizontal" FlowDirection="RightToLeft" Height="100" Focusable="False">
+            <Button Click="Button_Launch_Click" IsEnabled="{Binding ViewModel.LaunchWaveAvailable,ElementName=view}">Launch</Button>
+        </StackPanel>
+        <local:SelectableEnemyWaveTemplatesView VerticalAlignment="Stretch" ViewModel="{Binding ViewModel.SelectableEnemyWaveTemplatesViewModel,ElementName=view}"></local:SelectableEnemyWaveTemplatesView>
+    </DockPanel>
+</v:View>
