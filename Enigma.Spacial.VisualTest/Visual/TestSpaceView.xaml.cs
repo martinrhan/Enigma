@@ -11,7 +11,8 @@ namespace Enigma.Spacial.TestWPF.Visual {
         public TestSpace Model { get; private set; }
         public void AssignModel(TestSpace model) {
             Model = model;
-
+            shapedSettingsViewA.AssignModel(model.ShapedObjectAWrapper);
+            shapedSettingsViewB.AssignModel(model.ShapedObjectBWrapper);
         }
     }
 }

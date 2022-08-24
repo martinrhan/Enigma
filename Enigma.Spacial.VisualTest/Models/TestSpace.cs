@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Enigma.Spacial.TestWPF.Models {
     public class TestSpace {
-        public IShapedObject ShapedObjectA { get; set; } 
-        public IShapedObject ShapedObjectB { get; set; }
+        public Wrapper<IShapedObject> ShapedObjectAWrapper { get; } = new Wrapper<IShapedObject>();
+        public Wrapper<IShapedObject> ShapedObjectBWrapper { get; } = new Wrapper<IShapedObject>();
     }
 }

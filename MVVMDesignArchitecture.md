@@ -1,14 +1,22 @@
-###Model
-The basic dataset that everything depend on. It should be completely independent from ViewModel application. Model can be any class. It is usually from assembly other than the UI application, but some models are within the UI assembly.
+## Model
+The basic dataset that everything depend on. It should be completely independent from UI. It can be any class. 
+It is usually from assembly other than the UI, but some models are within the UI assembly.
 
-###RegularModel
-Sometimes, multiple ViewModels are reading from same model concurrently. If one of them write to the model, other ViewModels are not notified about the change of model.
-RegularModels and Models are one-one paired and RegularModel's reference to Model is readonly.
-Else than the RootView, only RegularModels can access Model directly.
+## ViewModel
+Act as translator and adaptor between Model and View.
 
-###ViewModel
-Act as translator and adaptor between RegularModel and View. Unlike one-one paired reference of View and ViewModel, relation between ViewModels and RegularModels is allowed to be zero or multiple, and allowed to be changed any times.
-A ViewModel always have a View, however, it should only read from View.
+ViewModels are one-one paired with Views.
+A View always have reference to a ViewModel and this reference should not be changed after first set.
+A ViewModel can optionaly have reference to its View. However this is not recommended and should only be done when necessary.
+Further more, ViewModel should only ready from View.
+
+If a ViewModel need to write to model it should have reference to its model.
+
+If a ViewModel need to read from model it should have a method of void return type named UpdateDataFromModel, parameter can be any number of any type.
+
+There are two patterns of callng UpdateDataFromModel.
+Calling from higher level of the ViewModel hierachy, or calling through WeakReferenceMessenger.
+
 All ViewModel inherits following abstract class:
 ```
 public abstract class ViewModel : INotifyPropertyChanged {
@@ -20,7 +28,7 @@ public abstract class ViewModel : INotifyPropertyChanged {
 }
 ```
 
-###View
+## View
 Where UI is. It must have a ViewModel and able access it, but unable to access Model directly. Views and ViewModels are one-one paired. Their reference to each other should only be set upon initialization.
 All Views inherits Following class:
 ```
@@ -37,15 +45,26 @@ public interface IView<out T> {
 }
 ```
 
-###RootView
+## RootView
 Creates first level Views, ViewModels, and Models, then assign them accordingly.
+It is usually a Window, or a Page. It can also be something else similar.
 
-Generaly, the Application have their Views, ViewModels, and Models are orgranized into three trees respectively. They share the same root, that is the RootView, and each node of the three parallel tree has a corresponding node in other two trees.
+Generaly, the Application have their Views, ViewModels, and Models orgranized into three trees respectively.
+They share the same root, that is the RootView, and each node of the three parallel tree has corresponding nodes in other two trees.
 
-###Entries
-An entry is where changes the state of application it can be either changing View and ViewModel only, or also changes RegularModel and Model behind it. It is usually an user input. If the model can mutate itself without user control, then the application probably have an entry that is a periodic reading of Model (of course this is done through ViewModel and RegularModel).
-An entry is always launched at UI layer, which is the View. The View then call its ViewModel's function or set its property. Here comes the most tricky part: the implementation of ViewModels.
+## Entries
+An entry is where changes the state of application.
+It can be either changing View and ViewModel only, or also changes Model behind it.
+It is usually an user input. 
 
+If the model can mutate itself without user's instruction,
+then the application probably should have an entry that is a periodic reading of Model
+(of course this is done through ViewModel and RegularModel).
+
+An entry is always launched at UI layer, which is the View.
+The View then call its ViewModel's function or set its property.
+
+## Implementaion Example
 A typical View has its xaml looks like this:
 ```
 <v:View x:TypeArguments="local:MyViewModel" x:Name="view"
@@ -58,14 +77,14 @@ A typical View has its xaml looks like this:
              xmlns:local="clr-namespace:MyWPF.Visual"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="200">
-	<v:ChildViewA ViewModel="Binding ViewModel.ChildViewModelA, ElementName=view">
-	<v:ChildViewB ViewModel="Binding ViewModel.ChildViewModelB, ElementName=view">
+	<v:ChildAView ViewModel="Binding ViewModel.ChildAViewModel, ElementName=view">
+	<v:ChildAView ViewModel="Binding ViewModel.ChildBViewModel, ElementName=view">
 </v:View>
 ````
 While its ViewModel is like this:
 ```
 public class MyViewModel : ViewModel{
-	public ChildViewModelA ChildViewModelA{get;} = new ChildViewModelA();
-	public ChildViewModelB ChildViewModelB{get;} = new ChildViewModelB();
+	public ChildAViewModel ChildAViewModel { get; } = new ChildAViewModel();
+	public ChildBViewModel ChildBViewModel { get; } = new ChildBViewModel();
 }
 ```
