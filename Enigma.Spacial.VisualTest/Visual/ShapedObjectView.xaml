@@ -1,4 +1,4 @@
-﻿<ContentControl x:Name="view"
+﻿<exwpf:View x:TypeArguments="local:ShapedObjectViewModel" x:Name="view"
     x:Class="Enigma.Spacial.TestWPF.Visual.ShapedObjectView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,10 +15,10 @@
             </ControlTemplate>
         </Control.Template>
         <TabItem>
-            <local:CircleView></local:CircleView>
+            <local:CircleView ViewModel="{Binding ViewModel.CircleViewModel, ElementName=view}"></local:CircleView>
         </TabItem>
         <TabItem>
-            <local:RectangleView></local:RectangleView>
+            <local:RectangleView ViewModel="{Binding ViewModel.RectangleViewModel, ElementName=view}"></local:RectangleView>
         </TabItem>
     </TabControl>
-</ContentControl>
+</exwpf:View>

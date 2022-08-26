@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Enigma.Spacial.TestWPF.Visual {
-    public partial class ShapedObjectView : ContentControl {
+    public partial class ShapedObjectView : View<ShapedObjectViewModel> {
         public ShapedObjectView() {
             InitializeComponent();
         }

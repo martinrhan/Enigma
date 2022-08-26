@@ -3,15 +3,10 @@ using ExtendedWPF;
 using System.Windows.Controls;
 
 namespace Enigma.Spacial.TestWPF.Visual {
-    public partial class TestSpaceView : ContentControl {
+    public partial class TestSpaceView : View<TestSpaceViewModel> {
         public TestSpaceView() {
             InitializeComponent();
         }
 
-        public TestSpace Model { get; private set; }
-        public void AssignModel(TestSpace model) {
-            Model = model;
-
-        }
     }
 }

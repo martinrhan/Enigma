@@ -1,4 +1,4 @@
-﻿<ContentControl x:Name="view"
+﻿<exwpf:View x:TypeArguments="local:ShapedSettingsViewModel" x:Name="view"
     x:Class="Enigma.Spacial.TestWPF.Visual.ShapedSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -27,12 +27,11 @@
                 </ControlTemplate>
             </Control.Template>
             <TabItem>
-                <local:CircleShapedSettingsView></local:CircleShapedSettingsView>
+                <local:CircleShapedSettingsView ViewModel="{Binding ViewModel.CircleShapedSettingsViewModel,ElementName=view}"></local:CircleShapedSettingsView>
             </TabItem>
             <TabItem>
-                <local:RectangleShapedSettingsView></local:RectangleShapedSettingsView>
+                <local:RectangleShapedSettingsView ViewModel="{Binding ViewModel.RectangleShapedSettingsViewModel,ElementName=view}"></local:RectangleShapedSettingsView>
             </TabItem>
         </TabControl>
     </StackPanel>
-
-</ContentControl>
+</exwpf:View>

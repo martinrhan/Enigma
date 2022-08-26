@@ -10,5 +10,11 @@ namespace Enigma.Spacial.TestWPF.Visual {
         public RectangleShapedSettingsViewModel() {
 
         }
+
+        public RectangleShapedObject Model { get; private set; }
+        public void AssignModel(RectangleShapedObject model) {
+            Model = model;
+        }
+
     }
 }

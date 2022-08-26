@@ -8,14 +8,18 @@ using Enigma.Common.Math;
 namespace Enigma.Spacial {
     public static class AABBFactory {
         public static AABB FromCircle(in Circle circle) {
-            (double x, double y) = circle.Center;
-            double r = circle.Radius;
-            return new AABB(new Vector2(x - r, y - r), new Vector2(x + r, y + r));
+            return FromCircle(circle.Center, circle.Radius);
+        }
+        public static AABB FromCircle(Vector2 center, double radius) {
+            (double x, double y) = center;
+            return new AABB(new Vector2(x - radius, y - radius), new Vector2(x + radius, y + radius));
         }
         public static AABB FromRectangle(in Rectangle rectangle) {
-            var points = rectangle.Points;
+            return FromPolygon(rectangle.Points);
+        }
+        public static AABB FromPolygon(IReadOnlyList<Vector2> points) {
             double lowerX = points[0].X, lowerY = points[0].Y, upperX = points[0].X, upperY = points[0].Y;
-            for (int i = 1; i < 4; i++) {
+            for (int i = 1; i < points.Count; i++) {
                 if (points[i].X < lowerX) lowerX = points[i].X;
                 if (points[i].Y < lowerY) lowerY = points[i].Y;
                 if (points[i].X > upperX) upperX = points[i].X;

@@ -17,7 +17,7 @@ namespace Enigma.Spacial {
     public interface ICircleShapedObject : IShapedObject {
         public Circle Shape { get; }
     }
-    public class CircleShapedObject : ICircleShapedObject{
+    public class CircleShapedObject : ICircleShapedObject {
         public CircleShapedObject(in Vector2 center, double radius) {
             Shape = new Circle(center, radius);
         }
@@ -30,10 +30,11 @@ namespace Enigma.Spacial {
             Center = center;
             if (radius < 0) throw new ArgumentException("radius cannot be less than 0", nameof(radius));
             Radius = radius;
+            AABB = AABBFactory.FromCircle(center, radius);
         }
         public Vector2 Center { get; }
         public double Radius { get; }
-        public AABB AABB => AABBFactory.FromCircle(this);
+        public AABB AABB { get; }
         public Circle Translate(in Vector2 displacement) => new Circle(Center + displacement, Radius);
         public Circle ChangeCenter(in Vector2 center) => new Circle(center, Radius);
         public Circle ChangeRadius(double radius) => new Circle(Center, radius);
@@ -55,12 +56,13 @@ namespace Enigma.Spacial {
             new Vector2(0, height),
             new Vector2(width, height),
             new Vector2(width, 0)
-        ) {}
+        ) { }
         private Rectangle(in Vector2 point0, in Vector2 point1, in Vector2 point2, in Vector2 point3) {
             points[0] = point0;
             points[1] = point1;
             points[2] = point2;
             points[3] = point3;
+            AABB = AABBFactory.FromPolygon(points);
         }
 
         public Rectangle Translate(in Vector2 displacement) => new Rectangle(
@@ -79,7 +81,7 @@ namespace Enigma.Spacial {
 
         private readonly Vector2[] points = new Vector2[4];
         public IReadOnlyList<Vector2> Points => Points;
-        public AABB AABB => AABBFactory.FromRectangle(this);
+        public AABB AABB { get; }
     }
 
     public interface ICircularSectorShapedObject : IShapedObject {
@@ -90,7 +92,7 @@ namespace Enigma.Spacial {
             Center = center;
             if (radius < 0) throw new ArgumentException("radius cannot be less than 0", nameof(radius));
             Radius = radius;
-            if (angleStart < 0 || Constants.TwoPI < angleStart) throw new ArgumentException("the starting position of the angle should be between 0 and two pi",nameof(angleStart));
+            if (angleStart < 0 || Constants.TwoPI < angleStart) throw new ArgumentException("the starting position of the angle should be between 0 and two pi", nameof(angleStart));
             AngleStart = angleStart;
             if (Constants.TwoPI < theta) throw new ArgumentException("theta cannot be greater than two pi");
             Theta = theta;

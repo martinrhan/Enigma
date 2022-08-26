@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExtendedWPF;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class CircleShapedSettingsViewModel : ViewModel {
-        private int radius;
-        public int Radius {
+        private double radius;
+        public double Radius {
             get { return radius; }
             set {
                 radius = value;
                 NotifyPropertyChanged();
-                model.Shape = model.Shape.ChangeRadius(radius);
+                Model.Shape = Model.Shape.ChangeRadius(radius);
             }
         }
 
@@ -24,13 +25,17 @@ namespace Enigma.Spacial.TestWPF.Visual {
             set {
                 center = value;
                 NotifyPropertyChanged();
-                model.Shape = model.Shape.ChangeCenter(center);
+                Model.Shape = Model.Shape.ChangeCenter(center);
             }
         }
 
-        private CircleShapedObject model;
-        public void AssignModel(CircleShapedObject circleShaped) {
-            this.model = circleShaped;
+        public CircleShapedObject Model { get; private set; }
+        public void AssignModel(CircleShapedObject model) {
+            Model = model;
+            radius = Model.Shape.Radius;
+            NotifyPropertyChanged(nameof(Radius));
+            center = model.Shape.Center;
+            NotifyPropertyChanged(nameof(Center));
         }
     }
 }

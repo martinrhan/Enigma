@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Enigma.Spacial.TestWPF.Visual {
-    public partial class ShapedSettingsView : ContentControl {
+    public partial class ShapedSettingsView : View<ShapedSettingsViewModel> {
         public ShapedSettingsView() {
             InitializeComponent();
         }

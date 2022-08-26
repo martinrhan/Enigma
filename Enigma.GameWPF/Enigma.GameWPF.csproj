@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<ProjectReference Include="..\Enigma.Game.Entities\Enigma.Game.Entities.csproj" />
 	<ProjectReference Include="..\Enigma.Game\Enigma.Game.csproj" />
 	<ProjectReference Include="..\Enigma.PhysicsEngine\Enigma.PhysicsEngine.csproj" />
