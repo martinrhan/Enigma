@@ -7,18 +7,25 @@
              xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <TabControl SelectedIndex="{Binding SelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}">
-        <Control.Template>
-            <ControlTemplate>
-                <ContentControl Content="{Binding SelectedContent, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-            </ControlTemplate>
-        </Control.Template>
-        <TabItem>
-            <local:CircleView ViewModel="{Binding ViewModel.CircleViewModel, ElementName=view}"></local:CircleView>
-        </TabItem>
-        <TabItem>
-            <local:RectangleView ViewModel="{Binding ViewModel.RectangleViewModel, ElementName=view}"></local:RectangleView>
-        </TabItem>
-    </TabControl>
+             d:DesignHeight="50" d:DesignWidth="50" Focusable="False"
+                Canvas.Left="{Binding ViewModel.LowerBoundX,RelativeSource={RelativeSource Self}}"
+                Canvas.Bottom="{Binding ViewModel.LowerBoundY,RelativeSource={RelativeSource Self}}"
+                Width="{Binding ViewModel.Width,RelativeSource={RelativeSource Self}}"
+                Height="{Binding ViewModel.Height,RelativeSource={RelativeSource Self}}">
+    <Canvas>
+        <Rectangle Stroke="Black" Width="{Binding Height,ElementName=view}" Height="{Binding Height, ElementName=view}"></Rectangle>
+        <TabControl SelectedIndex="{Binding SelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}" Width="{Binding Height,ElementName=view}" Height="{Binding Height, ElementName=view}">
+            <Control.Template>
+                <ControlTemplate>
+                    <ContentControl Content="{Binding SelectedContent, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </ControlTemplate>
+            </Control.Template>
+            <TabItem>
+                <local:CircleView ViewModel="{Binding ViewModel.CircleViewModel, ElementName=view}"></local:CircleView>
+            </TabItem>
+            <TabItem>
+                <local:RectangleView ViewModel="{Binding ViewModel.RectangleViewModel, ElementName=view}"></local:RectangleView>
+            </TabItem>
+        </TabControl>
+    </Canvas>
 </exwpf:View>

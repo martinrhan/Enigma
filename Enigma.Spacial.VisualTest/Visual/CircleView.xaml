@@ -7,5 +7,6 @@
              xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="50" d:DesignWidth="50" Focusable="False">
+    <Ellipse Stroke="Black"></Ellipse>
 </exwpf:View>

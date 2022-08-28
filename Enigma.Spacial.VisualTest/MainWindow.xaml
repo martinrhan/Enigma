@@ -6,5 +6,5 @@
         xmlns:v ="clr-namespace:Enigma.Spacial.TestWPF.Visual"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <v:TestSpaceView x:Name="testSpaceView"></v:TestSpaceView>
+    <v:TestSpaceView ViewModel="{Binding TestSpaceViewModel,ElementName=window}"></v:TestSpaceView>
 </Window>

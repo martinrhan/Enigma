@@ -7,12 +7,13 @@ using ExtendedWPF;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class ShapedSettingsViewModel : ViewModel {
-        public ShapedSettingsViewModel() {
-
+        public ShapedSettingsViewModel(int messengerToken) {
+            CircleShapedSettingsViewModel = new CircleShapedSettingsViewModel(messengerToken);
+            RectangleShapedSettingsViewModel = new RectangleShapedSettingsViewModel(messengerToken);
         }
 
-        public CircleShapedSettingsViewModel CircleShapedSettingsViewModel { get; } = new CircleShapedSettingsViewModel();
-        public RectangleShapedSettingsViewModel RectangleShapedSettingsViewModel { get; } = new RectangleShapedSettingsViewModel();
+        public CircleShapedSettingsViewModel CircleShapedSettingsViewModel { get; } 
+        public RectangleShapedSettingsViewModel RectangleShapedSettingsViewModel { get; }
 
         public IShapedObject Model { get; private set; }
         public void AssignModel(IShapedObject model) {

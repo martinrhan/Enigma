@@ -21,8 +21,11 @@ namespace Enigma.Spacial.TestWPF {
     /// </summary>
     public partial class MainWindow : Window {
         public MainWindow() {
+            TestSpaceViewModel = new TestSpaceViewModel();
             InitializeComponent();
-            
+            TestSpaceViewModel.AssignModel(new TestSpace());
         }
+
+        public TestSpaceViewModel TestSpaceViewModel { get; }
     }
 }

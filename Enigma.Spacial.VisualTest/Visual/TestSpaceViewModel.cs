@@ -9,16 +9,16 @@ using ExtendedWPF;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class TestSpaceViewModel : ViewModel {
-        public TestSpaceViewModel(TestSpace testSpace) { }
+        public TestSpaceViewModel() { }
 
-        public ShapedSettingsViewModel ShapedSettingsAViewModel { get; } = new ShapedSettingsViewModel();
-        public ShapedSettingsViewModel ShapedSettingsBViewModel { get; } = new ShapedSettingsViewModel();
-        public ShapedObjectViewModel ShapedObjectAViewModel { get; } = new ShapedObjectViewModel();
-        public ShapedObjectViewModel ShapedObjectBViewModel { get; } = new ShapedObjectViewModel();
+        public ShapedSettingsViewModel ShapedSettingsAViewModel { get; } = new ShapedSettingsViewModel(0);
+        public ShapedSettingsViewModel ShapedSettingsBViewModel { get; } = new ShapedSettingsViewModel(1);
+        public ShapedObjectViewModel ShapedObjectAViewModel { get; } = new ShapedObjectViewModel(0);
+        public ShapedObjectViewModel ShapedObjectBViewModel { get; } = new ShapedObjectViewModel(1);
 
         private static Func<IShapedObject>[] shapedObjectFactories = new Func<IShapedObject>[] {
-            ()=> new CircleShapedObject(Vector2.Zero, 10),
-            ()=> new RectangleShapedObject(10, 10)
+            ()=> new CircleShapedObject(new Circle(Vector2.Zero, 100).Translate(new(200,200))),
+            ()=> new RectangleShapedObject(new Rectangle(100,100).Translate(new(200,200))) 
         };
 
         private int aSelectedShapedTypeIndex = 0;
@@ -39,13 +39,17 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 bSelectedShapedTypeIndex = value;
                 NotifyPropertyChanged();
                 Model.ShapedObjectB = shapedObjectFactories[value]();
-                ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectB);
+                ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB);
             }
         }
 
         public TestSpace Model { get; private set; }
         public void AssignModel(TestSpace model) {
             Model = model;
+            Model.ShapedObjectA = shapedObjectFactories[0]();
+            ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectA);
+            Model.ShapedObjectB = shapedObjectFactories[0]();
+            ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB);
         }
     }
 }

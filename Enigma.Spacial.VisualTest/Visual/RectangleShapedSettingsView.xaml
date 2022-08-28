@@ -7,7 +7,7 @@
              xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200">
+             d:DesignHeight="200" d:DesignWidth="200" Focusable="False">
     <StackPanel>
         <Grid Height="30" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -18,28 +18,48 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <DockPanel Grid.Column="0" Grid.Row="0">
-                <TextBlock>P0:</TextBlock>
-                <local:Vector2InputBox></local:Vector2InputBox>
-            </DockPanel>
-            <DockPanel Grid.Column="1" Grid.Row="0">
-                <TextBlock>P1:</TextBlock>
-                <TextBlock></TextBlock>
-            </DockPanel>
             <DockPanel Grid.Column="0" Grid.Row="1">
-                <TextBlock>P2:</TextBlock>
-                <TextBlock></TextBlock>
+                <TextBlock>P0:</TextBlock>
+                <local:Vector2InputBox Vector2="{Binding ViewModel.P0,ElementName=view}"></local:Vector2InputBox>
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="1">
+                <TextBlock>P1:</TextBlock>
+                <TextBlock Text="{Binding ViewModel.P1,ElementName=view}"></TextBlock>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.Row="0">
+                <TextBlock>P2:</TextBlock>
+                <TextBlock Text="{Binding ViewModel.P2,ElementName=view}"></TextBlock>
+            </DockPanel>
+            <DockPanel Grid.Column="0" Grid.Row="0">
                 <TextBlock>P3:</TextBlock>
-                <TextBlock></TextBlock>
+                <TextBlock Text="{Binding ViewModel.P3,ElementName=view}"></TextBlock>
+            </DockPanel>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <TextBlock>Width</TextBlock>
+                <TextBox Text="{Binding ViewModel.Width,ElementName=view}"></TextBox>
+            </DockPanel>
+            <DockPanel Grid.Column="1">
+                <TextBlock>Height</TextBlock>
+                <TextBox Text="{Binding ViewModel.Height, ElementName=view}"></TextBox>
             </DockPanel>
         </Grid>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Left">RotateBy</TextBlock>
-            <Button DockPanel.Dock="Right">Invoke</Button>
-            <TextBlock DockPanel.Dock="Right">Pi</TextBlock>
-            <TextBox></TextBox>
+            <Button DockPanel.Dock="Right" Click="Button_InvokeRotation_Click">Invoke</Button>
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock DockPanel.Dock="Left">RotateBy</TextBlock>
+                <TextBlock DockPanel.Dock="Right">Pi</TextBlock>
+                <TextBox x:Name="textBox_RotateBy"></TextBox>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Bottom">
+                <TextBlock DockPanel.Dock="Left">PivotAt</TextBlock>
+                <local:Vector2InputBox x:Name="vector2InputBox_Pivot"></local:Vector2InputBox>
+            </DockPanel>
         </DockPanel>
     </StackPanel>
 </exwpf:View>

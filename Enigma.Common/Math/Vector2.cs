@@ -83,6 +83,7 @@ namespace Enigma.Common.Math {
         public string ToString(IFormatProvider formatProvider) => $"({X.ToString(formatProvider)},{Y.ToString(formatProvider)})";
         public string ToString(string format, IFormatProvider formatProvider) =>
             $"({X.ToString(format, formatProvider)},{Y.ToString(format, formatProvider)})";
+
     }
 
 }

@@ -7,5 +7,6 @@
              xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="100" d:DesignWidth="100" Focusable="False">
+    <Polygon Points="{Binding ViewModel.PointCollection,ElementName=view}" Stroke="Black"></Polygon>
 </exwpf:View>
