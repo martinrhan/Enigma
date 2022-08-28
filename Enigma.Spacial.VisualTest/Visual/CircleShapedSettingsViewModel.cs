@@ -9,33 +9,35 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class CircleShapedSettingsViewModel : ViewModel {
-        private double radius;
+        public CircleShapedSettingsViewModel(int messengerToken) {
+            this.messengerToken = messengerToken;
+        }
+        private readonly int messengerToken;
+
         public double Radius {
-            get { return radius; }
+            get { return Model.Shape.Radius; }
             set {
-                radius = value;
+                Model.Shape = Model.Shape.ChangeRadius(value);
                 NotifyPropertyChanged();
-                Model.Shape = Model.Shape.ChangeRadius(radius);
+                WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
             }
         }
 
-        private Vector2 center;
         public Vector2 Center {
-            get { return center; }
+            get { return Model.Shape.Center; }
             set {
-                center = value;
+                Model.Shape = Model.Shape.ChangeCenter(value);
                 NotifyPropertyChanged();
-                Model.Shape = Model.Shape.ChangeCenter(center);
+                WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
             }
         }
 
         public CircleShapedObject Model { get; private set; }
         public void AssignModel(CircleShapedObject model) {
             Model = model;
-            radius = Model.Shape.Radius;
             NotifyPropertyChanged(nameof(Radius));
-            center = model.Shape.Center;
             NotifyPropertyChanged(nameof(Center));
+            WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
         }
     }
 }

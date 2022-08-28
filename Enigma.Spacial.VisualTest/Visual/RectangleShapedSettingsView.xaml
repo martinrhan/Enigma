@@ -7,7 +7,7 @@
              xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200">
+             d:DesignHeight="200" d:DesignWidth="200" Focusable="False">
     <StackPanel>
         <Grid Height="30" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
             <DockPanel Grid.Column="0" Grid.Row="0">
                 <TextBlock>P0:</TextBlock>
-                <local:Vector2InputBox></local:Vector2InputBox>
+                <local:Vector2InputBox Vector2="{Binding ViewModel.,ElementName=view}"></local:Vector2InputBox>
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="0">
                 <TextBlock>P1:</TextBlock>
