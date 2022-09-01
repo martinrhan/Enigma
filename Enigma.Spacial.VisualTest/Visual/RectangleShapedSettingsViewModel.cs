@@ -53,9 +53,9 @@ namespace Enigma.Spacial.TestWPF.Visual {
             }
         }
 
-        public void InvokeRotation(double theta, in Vector2 pivot) {
+        public void InvokeRotation(double theta) {
             if (Model == null) return;
-            Model.Shape = Model.Shape.Rotate(theta, pivot);
+            Model.Shape = Model.Shape.Rotate(theta, Model.Shape.Points[0]);
             NotifyPropertyChanged();
             NotifyPropertyChanged(nameof(P1));
             NotifyPropertyChanged(nameof(P2));

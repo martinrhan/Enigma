@@ -24,15 +24,15 @@
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="1">
                 <TextBlock>P1:</TextBlock>
-                <TextBlock Text="{Binding ViewModel.P1,ElementName=view}"></TextBlock>
+                <TextBlock Text="{Binding ViewModel.P1,ElementName=view, StringFormat=F2}"></TextBlock>
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="0">
                 <TextBlock>P2:</TextBlock>
-                <TextBlock Text="{Binding ViewModel.P2,ElementName=view}"></TextBlock>
+                <TextBlock Text="{Binding ViewModel.P2,ElementName=view, StringFormat=F2}"></TextBlock>
             </DockPanel>
             <DockPanel Grid.Column="0" Grid.Row="0">
                 <TextBlock>P3:</TextBlock>
-                <TextBlock Text="{Binding ViewModel.P3,ElementName=view}"></TextBlock>
+                <TextBlock Text="{Binding ViewModel.P3,ElementName=view, StringFormat=F2}"></TextBlock>
             </DockPanel>
         </Grid>
         <Grid>
@@ -49,17 +49,11 @@
                 <TextBox Text="{Binding ViewModel.Height, ElementName=view}"></TextBox>
             </DockPanel>
         </Grid>
-        <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left">RotateBy</TextBlock>
             <Button DockPanel.Dock="Right" Click="Button_InvokeRotation_Click">Invoke</Button>
-            <DockPanel DockPanel.Dock="Top">
-                <TextBlock DockPanel.Dock="Left">RotateBy</TextBlock>
-                <TextBlock DockPanel.Dock="Right">Pi</TextBlock>
-                <TextBox x:Name="textBox_RotateBy"></TextBox>
-            </DockPanel>
-            <DockPanel DockPanel.Dock="Bottom">
-                <TextBlock DockPanel.Dock="Left">PivotAt</TextBlock>
-                <local:Vector2InputBox x:Name="vector2InputBox_Pivot"></local:Vector2InputBox>
-            </DockPanel>
+            <TextBlock DockPanel.Dock="Right">Pi</TextBlock>
+            <TextBox x:Name="textBox_RotateBy"></TextBox>
         </DockPanel>
     </StackPanel>
 </exwpf:View>

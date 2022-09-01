@@ -17,7 +17,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         public ShapedObjectViewModel ShapedObjectBViewModel { get; } = new ShapedObjectViewModel(1);
 
         private static Func<IShapedObject>[] shapedObjectFactories = new Func<IShapedObject>[] {
-            ()=> new CircleShapedObject(new Circle(Vector2.Zero, 100).Translate(new(200,200))),
+            ()=> new CircleShapedObject(new Circle(Vector2.Zero, 50).Translate(new(100,100))),
             ()=> new RectangleShapedObject(new Rectangle(100,100).Translate(new(200,200))) 
         };
 

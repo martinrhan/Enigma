@@ -7,7 +7,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
             InitializeComponent();
         }
         private void Button_InvokeRotation_Click(object sender, System.Windows.RoutedEventArgs e) {
-            ViewModel.InvokeRotation(double.Parse(textBox_RotateBy.Text), vector2InputBox_Pivot.Vector2);
+            ViewModel.InvokeRotation(double.Parse(textBox_RotateBy.Text) * Math.PI);
         }
     }
 }

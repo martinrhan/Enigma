@@ -18,6 +18,7 @@
             <local:ShapedSettingsView ViewModel="{Binding ViewModel.ShapedSettingsAViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.ASelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedSettingsView>
             <TextBlock Margin="0,20,0,0" FontWeight="Bold">ShapedObjectB</TextBlock>
             <local:ShapedSettingsView ViewModel="{Binding ViewModel.ShapedSettingsBViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.BSelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedSettingsView>
+        
         </StackPanel>
         <Canvas Grid.Column="1">
             <local:ShapedObjectView ViewModel="{Binding ViewModel.ShapedObjectAViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.ASelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedObjectView>

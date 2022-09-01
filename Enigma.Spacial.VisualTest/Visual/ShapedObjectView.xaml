@@ -13,7 +13,7 @@
                 Width="{Binding ViewModel.Width,RelativeSource={RelativeSource Self}}"
                 Height="{Binding ViewModel.Height,RelativeSource={RelativeSource Self}}">
     <Canvas>
-        <Rectangle Stroke="Black" Width="{Binding Height,ElementName=view}" Height="{Binding Height, ElementName=view}"></Rectangle>
+        <Rectangle Stroke="Black" Width="{Binding Width,ElementName=view}" Height="{Binding Height, ElementName=view}"></Rectangle>
         <TabControl SelectedIndex="{Binding SelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}" Width="{Binding Height,ElementName=view}" Height="{Binding Height, ElementName=view}">
             <Control.Template>
                 <ControlTemplate>

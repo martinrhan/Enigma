@@ -23,6 +23,10 @@ namespace Enigma.Spacial {
 
         public AABB Translate(in Vector2 displacement) =>
             new AABB(this.LowerBound + displacement, this.UpperBound + displacement);
+        public AABB ChangeWidth(double width) =>
+            new AABB(this.LowerBound, new Vector2(this.LowerBound.X + width, this.UpperBound.Y));
+        public AABB ChangeHeight(double height) => 
+            new AABB(this.LowerBound, new Vector2(this.UpperBound.X, this.LowerBound.Y + height));
 
         public static AABB Combine(in AABB a, in AABB b) => new AABB(
                 new Vector2(Math.Min(a.LowerBound.X, b.LowerBound.X), Math.Min(a.LowerBound.Y, b.LowerBound.Y)),

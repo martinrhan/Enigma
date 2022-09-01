@@ -8,11 +8,11 @@ Act as translator and adaptor between Model and View.
 ViewModels are one-one paired with Views.
 A View always have reference to a ViewModel and this reference should not be changed after first set.
 A ViewModel can optionaly have reference to its View. However this is not recommended and should only be done when necessary.
-Further more, ViewModel should only ready from View.
+Furthermore, ViewModel should only ready from View.
 
 If a ViewModel need to write to model it should have reference to its model.
 
-If a ViewModel need to read from model it should have a method of void return type named UpdateDataFromModel, parameter can be any number of any type.
+If a ViewModel need to read from model it should have a method of void return type named UpdateDataFromModel, parameter can be any number of any type as long as they are models.
 
 There are two patterns of callng UpdateDataFromModel.
 Calling from higher level of the ViewModel hierachy, or calling through WeakReferenceMessenger.
@@ -88,3 +88,4 @@ public class MyViewModel : ViewModel{
 	public ChildBViewModel ChildBViewModel { get; } = new ChildBViewModel();
 }
 ```
+
