@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Enigma.Spacial {
-    internal static class CollisionCalculator {
-        internal static bool CheckAABBIntersection(in AABB a, in AABB b, Spacial spaical) {
+    public static class CollisionCalculator {
+        public static bool CheckAABBIntersection(in AABB a, in AABB b, Spacial spaical) {
             if (AABB.HaveIntersection(a, b)) return true;
             else
             if (a.UpperBound.X > spaical.Width) {
@@ -28,14 +28,14 @@ namespace Enigma.Spacial {
                     if (AABB.HaveIntersection(b.Translate(new(-spaical.Width, -spaical.Height)), a)) return true;
                 }
             } else {
-                if (a.UpperBound.Y > spaical.Height) {
+                if (b.UpperBound.Y > spaical.Height) {
                     if (AABB.HaveIntersection(b.Translate(new(0, -spaical.Height)), a)) return true;
                 }
             }
             return false;
         }
 
-        internal static bool CheckCollision(IShapedObject shapeA, IShapedObject shapeB, Spacial spacial) {
+        public static bool CheckCollision(IShapedObject shapeA, IShapedObject shapeB, Spacial spacial) {
             switch (shapeA) {
                 case ICircleShapedObject circleA:
                     return CheckCollision(circleA, shapeB, spacial);
@@ -45,7 +45,7 @@ namespace Enigma.Spacial {
                     throw new ArgumentException("The argument's type" + shapeA.GetType().ToString() + "is not supported.");
             }
         }
-        internal static bool CheckCollision(ICircleShapedObject circleA, IShapedObject shapeB, Spacial spacial) {
+        public static bool CheckCollision(ICircleShapedObject circleA, IShapedObject shapeB, Spacial spacial) {
             switch (shapeB) {
                 case ICircleShapedObject circleB:
                     return CalculateCollision(circleA.Shape, circleB.Shape, spacial);
@@ -55,7 +55,7 @@ namespace Enigma.Spacial {
                     throw new ArgumentException("The argument's type" + shapeB.GetType().ToString() + "is not supported.");
             }
         }
-        internal static bool CheckCollision(IRectangleShapedObject rectangleA, IShapedObject shapeB, Spacial spacial) {
+        public static bool CheckCollision(IRectangleShapedObject rectangleA, IShapedObject shapeB, Spacial spacial) {
             switch (shapeB) {
                 case ICircleShapedObject circleB:
                     return CalculateCollision(circleB.Shape, rectangleA.Shape, spacial);
@@ -65,10 +65,10 @@ namespace Enigma.Spacial {
                     throw new ArgumentException("The argument's type" + shapeB.GetType().ToString() + "is not supported.");
             }
         }
-        internal static bool CalculateCollision(in Circle circleA, in Circle circleB, Spacial spacial) {
+        public static bool CalculateCollision(in Circle circleA, in Circle circleB, Spacial spacial) {
             return spacial.GetShortestDisplacement(circleA.Center, circleB.Center).Length < (circleA.Radius + circleB.Radius);
         }
-        internal static bool CalculateCollision(in Circle circleA, in Rectangle rectangleB, Spacial spacial) {
+        public static bool CalculateCollision(in Circle circleA, in Rectangle rectangleB, Spacial spacial) {
             static double GetTravelDistanceFromPointToLine(in Vector2 point, in Vector2 lineStart, in Vector2 lineEnd) {
                 Vector2 displacement = lineEnd - lineStart;
                 Vector2 leftwardPerpendicular = displacement.Rotate90Degree();

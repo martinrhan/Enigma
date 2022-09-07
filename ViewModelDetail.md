@@ -7,11 +7,11 @@ Sometimes, ViewModel need to have reference to the View. For example some elemen
 By how it interect with Model, ViewModels can be classified into 4 types:
 
 ### Instructive (Bidirectional):
-ViewModel does not have all data that Model will be.
+ViewModel does not have all data that it shall be.
 It sends some data to Model and let it update itself, then retrieve data from it.
 
 ### Dominative (Writing only):
-ViewModel have all data that Model will be.
+ViewModel have all data that it shall be.
 It sends data to Model but don’t need to retrieve data from it.
 
 ### Listening (Reading only):
@@ -30,3 +30,4 @@ it call UpdateDataFromModel method of ViewModels under it.
 Or call the Send method of the WeakReferenseMessenger.
 
 If WeakReferenceMessenger is to be used, an additional message class should be specifically defined.
+

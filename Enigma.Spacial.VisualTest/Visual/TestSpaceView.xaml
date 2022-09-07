@@ -18,9 +18,10 @@
             <local:ShapedSettingsView ViewModel="{Binding ViewModel.ShapedSettingsAViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.ASelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedSettingsView>
             <TextBlock Margin="0,20,0,0" FontWeight="Bold">ShapedObjectB</TextBlock>
             <local:ShapedSettingsView ViewModel="{Binding ViewModel.ShapedSettingsBViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.BSelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedSettingsView>
-        
+            <local:CollisionCalculatorResultView Margin="0,20,0,0" ViewModel="{Binding ViewModel.CollisionCalculatorResultViewModel,ElementName=view}"></local:CollisionCalculatorResultView>        
         </StackPanel>
         <Canvas Grid.Column="1">
+            <Rectangle Stroke="Black" Canvas.Left="0" Canvas.Bottom="0" Width="{Binding ViewModel.Width,ElementName=view}" Height="{Binding ViewModel.Height,ElementName=view}"></Rectangle>
             <local:ShapedObjectView ViewModel="{Binding ViewModel.ShapedObjectAViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.ASelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedObjectView>
             <local:ShapedObjectView ViewModel="{Binding ViewModel.ShapedObjectBViewModel,ElementName=view}" SelectedShapedTypeIndex="{Binding ViewModel.BSelectedShapedTypeIndex,ElementName=view, Mode=TwoWay}"></local:ShapedObjectView>
         </Canvas>

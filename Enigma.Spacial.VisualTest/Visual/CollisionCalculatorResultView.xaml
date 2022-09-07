@@ -8,4 +8,14 @@
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <UniformGrid Rows="1">
+            <TextBlock>AABBIntersection</TextBlock>
+            <TextBlock Text="{Binding ViewModel.AABBIntersection,ElementName=view}"></TextBlock>
+        </UniformGrid>
+        <UniformGrid Rows="1">
+            <TextBlock>ShapeCollision</TextBlock>
+            <TextBlock Text="{Binding ViewModel.ShapeCollision,ElementName=view}"></TextBlock>
+        </UniformGrid>
+    </StackPanel>
 </exwpf:View>
