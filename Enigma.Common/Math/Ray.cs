@@ -14,12 +14,23 @@ namespace Enigma.Common.Math {
         public Vector2 DirectionalVector { get; }
 
         public readonly struct GetIntersectionResult {
-            public double X { get; init; }
-            public double Y { get; init; }
-            public double RayATravelDistance { get; init; }
-            public double RayBTravelDistance { get; init; }
+            public Vector2 Intersection { get; init; }
+            public double RayATraveledDistance { get; init; }
+            public double RayBTraveledDistance { get; init; }
         }
 
+        public double GetTravelDistance(in Ray rayTo) {
+            Matrix22 matrix22 = new Matrix22(
+                this.DirectionalVector.X, -rayTo.DirectionalVector.X,
+                this.DirectionalVector.Y, -rayTo.DirectionalVector.Y
+                );
+            Matrix21 matrix21 = new Matrix21(
+                rayTo.Origin.X - this.Origin.X,
+                rayTo.Origin.Y - this.Origin.Y
+                );
+            Matrix21 result = matrix22.Inverse() * matrix21;
+            return result[0];
+        }
         public static GetIntersectionResult GetIntersection(in Ray rayA, in Ray rayB) {
             Matrix22 matrix22 = new Matrix22(
                 rayA.DirectionalVector.X, -rayB.DirectionalVector.X,
@@ -31,23 +42,10 @@ namespace Enigma.Common.Math {
                 );
             Matrix21 result = matrix22.Inverse() * matrix21;
             return new GetIntersectionResult() {
-                X = rayA.Origin.X + result[0] * rayA.DirectionalVector.X,
-                Y = rayA.Origin.Y + result[0] * rayA.DirectionalVector.Y,
-                RayATravelDistance = result[0],
-                RayBTravelDistance = result[1]
+                Intersection = new Vector2(rayA.Origin.X + result[0] * rayA.DirectionalVector.X, rayA.Origin.Y + result[0] * rayA.DirectionalVector.Y),
+                RayATraveledDistance = result[0],
+                RayBTraveledDistance = result[1]
             };
-        }
-        public static double GetTravelDistance(in Ray rayTraveller, in Ray rayTo) {
-            Matrix22 matrix22 = new Matrix22(
-                rayTraveller.DirectionalVector.X, -rayTo.DirectionalVector.X,
-                rayTraveller.DirectionalVector.Y, -rayTo.DirectionalVector.Y
-                );
-            Matrix21 matrix21 = new Matrix21(
-                rayTo.Origin.X - rayTraveller.Origin.X,
-                rayTo.Origin.Y - rayTraveller.Origin.Y
-                );
-            Matrix21 result = matrix22.Inverse() * matrix21;
-            return result[0];
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Enigma.Spacial {
                 case ICircleShapedObject circleB:
                     return CalculateCollision(circleB.Shape, rectangleA.Shape, spacial);
                 //case IRectangleShaped rectangleB:
-                    //return CalculateCollision(rectangleA, rectangleB, spacial);
+                //return CalculateCollision(rectangleA, rectangleB, spacial);
                 default:
                     throw new ArgumentException("The argument's type" + shapeB.GetType().ToString() + "is not supported.");
             }
@@ -69,25 +69,33 @@ namespace Enigma.Spacial {
             return spacial.GetShortestDisplacement(circleA.Center, circleB.Center).Length < (circleA.Radius + circleB.Radius);
         }
         public static bool CalculateCollision(in Circle circleA, in Rectangle rectangleB, Spacial spacial) {
-            static double GetTravelDistanceFromPointToLine(in Vector2 point, in Vector2 lineStart, in Vector2 lineEnd) {
+            static bool CheckLineCircleCollision(in Circle circle, in Vector2 lineStart, in Vector2 lineEnd, out double perpendicularDistanceFromCenter) {
                 Vector2 displacement = lineEnd - lineStart;
-                Vector2 leftwardPerpendicular = displacement.Rotate90Degree();
-                Ray ray_pointToLine = new Ray(point, leftwardPerpendicular);
+                Vector2 leftwardPerpendicular = displacement.Rotate90DegreeClockwise();
+                Ray ray_pointToLine = new Ray(circle.Center, leftwardPerpendicular);
                 Ray ray_line = new Ray(lineStart, displacement);
-                return Ray.GetTravelDistance(ray_pointToLine, ray_line);
+                var result = Ray.GetIntersection(ray_pointToLine, ray_line);
+                perpendicularDistanceFromCenter = result.RayATraveledDistance;
+                if (-circle.Radius < perpendicularDistanceFromCenter && perpendicularDistanceFromCenter < circle.Radius) {
+                    Vector2 vector_centerToStart = lineStart - circle.Center;
+                    Vector2 vector_centerToIntersection = result.Intersection - circle.Center;
+                    Vector2 vector_centerToEnd = lineEnd - circle.Center;
+                    if (vector_centerToStart.IsAtLeftOf(vector_centerToIntersection) != vector_centerToEnd.IsAtLeftOf(vector_centerToIntersection)) {
+                        return true;
+                    } else {
+                        return vector_centerToStart.Length < circle.Radius || vector_centerToEnd.Length < circle.Radius;
+                    }
+                } else return false;
             }
             static bool CheckCollision(in Circle circle, in Rectangle rectangle) {
                 //If the circle intersects any line, return true.
-                double travelDistance01 = GetTravelDistanceFromPointToLine(circle.Center, rectangle.Points[0], rectangle.Points[1]);
-                if (-circle.Radius < travelDistance01 && travelDistance01 < circle.Radius) return true;
-                double travelDistance12 = GetTravelDistanceFromPointToLine(circle.Center, rectangle.Points[1], rectangle.Points[2]);
-                if (-circle.Radius < travelDistance12 && travelDistance12 < circle.Radius) return true;
-                double travelDistance23 = GetTravelDistanceFromPointToLine(circle.Center, rectangle.Points[2], rectangle.Points[3]);
-                if (-circle.Radius < travelDistance23 && travelDistance23 < circle.Radius) return true;
-                double travelDistance30 = GetTravelDistanceFromPointToLine(circle.Center, rectangle.Points[3], rectangle.Points[0]);
-                if (-circle.Radius < travelDistance30 && travelDistance30 < circle.Radius) return true;
+                double travelDistance01, travelDistance12, travelDistance23, travelDistance30;
+                if (CheckLineCircleCollision(circle, rectangle.Points[0], rectangle.Points[1], out travelDistance01)) return true;
+                if (CheckLineCircleCollision(circle, rectangle.Points[1], rectangle.Points[2], out travelDistance12)) return true;
+                if (CheckLineCircleCollision(circle, rectangle.Points[2], rectangle.Points[3], out travelDistance23)) return true;
+                if (CheckLineCircleCollision(circle, rectangle.Points[3], rectangle.Points[0], out travelDistance30)) return true;
                 //If center of the circle is at right side for each line (going clockwise), return true.
-                if (0 < travelDistance01 && 0 < travelDistance12 && 0 < travelDistance23 && 0 < travelDistance30) return true;
+                if (travelDistance01 < 0 && travelDistance12 < 0 && travelDistance23 < 0 && travelDistance30 < 0) return true;
                 return false;
             }
             bool circleAABBUpperBoundXGreaterThanSpacialWidth = circleA.AABB.UpperBound.X > spacial.Width;

@@ -17,37 +17,34 @@ namespace Enigma.Common.Math {
         public static Vector2 operator +(in Vector2 vectorA, in Vector2 vectorB) {
             return new Vector2(vectorA.X + vectorB.X, vectorA.Y + vectorB.Y);
         }
-
         public static Vector2 operator -(in Vector2 vectorA, in Vector2 vectorB) {
             return new Vector2(vectorA.X - vectorB.X, vectorA.Y - vectorB.Y);
         }
-
         public static Vector2 operator -(in Vector2 vector) {
             return new Vector2(-vector.X, -vector.Y);
         }
-
         public static Vector2 operator *(in Vector2 vector, in double real) {
             return new Vector2(vector.X * real, vector.Y * real);
         }
-
         public static Vector2 operator /(in Vector2 vector, in double real) {
             return new Vector2(vector.X / real, vector.Y / real);
+        }
+        public static bool operator ==(in Vector2 vectorA, in Vector2 vectorB) {
+            return vectorA.X == vectorB.X && vectorA.Y == vectorB.Y;
+        }
+        public static bool operator !=(in Vector2 vectorA, in Vector2 vectorB) {
+            return vectorA.X != vectorB.X || vectorA.Y != vectorB.Y;
         }
 
         public bool Equals(Vector2 other) {
             return X == other.X && Y == other.Y;
         }
-
-        public static bool operator ==(in Vector2 vectorA, in Vector2 vectorB) {
-            return vectorA.X == vectorB.X && vectorA.Y == vectorB.Y;
-        }
-
-        public static bool operator !=(in Vector2 vectorA, in Vector2 vectorB) {
-            return vectorA.X != vectorB.X || vectorA.Y != vectorB.Y;
-        }
-
         public override bool Equals(object obj) {
             return obj is Vector2 v && this == v;
+        }
+
+        public static double DotProduct(in Vector2 vectorA, in Vector2 vectorB) {
+            return vectorA.X * vectorB.X + vectorA.Y * vectorB.Y;
         }
 
         public double Length => System.Math.Sqrt(X * X + Y * Y);
@@ -65,11 +62,14 @@ namespace Enigma.Common.Math {
             Vector2 rotatedDifference = difference.Rotate(theta);
             return pivot + rotatedDifference;
         }
-        public Vector2 Rotate90Degree() {
+        public Vector2 Rotate90DegreeClockwise() {
             return new Vector2(-Y, X);
         }
-        public Vector2 RotateNegative90Degree() {
+        public Vector2 Rotate90DegreeAnticlockwise() {
             return new Vector2(Y, -X);
+        }
+        public bool IsAtLeftOf(Vector2 vector) {
+            return DotProduct(this, vector.Rotate90DegreeClockwise()) < 0;
         }
 
         public override int GetHashCode() => HashCode.Combine(X, Y);
