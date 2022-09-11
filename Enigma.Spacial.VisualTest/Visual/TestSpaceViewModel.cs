@@ -36,7 +36,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 aSelectedShapedTypeIndex = value;
                 NotifyPropertyChanged();
                 Model.ShapedObjectA = shapedObjectFactories[value]();
-                ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectA);
+                ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectA, Model);
                 SendTestSpaceChangedMessage();
             }
         }
@@ -48,7 +48,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 bSelectedShapedTypeIndex = value;
                 NotifyPropertyChanged();
                 Model.ShapedObjectB = shapedObjectFactories[value]();
-                ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB);
+                ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB, Model);
                 SendTestSpaceChangedMessage();
             }
         }
@@ -59,9 +59,9 @@ namespace Enigma.Spacial.TestWPF.Visual {
             NotifyPropertyChanged(nameof(Width));
             NotifyPropertyChanged(nameof(Height));
             Model.ShapedObjectA = shapedObjectFactories[0]();
-            ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectA);
+            ShapedSettingsAViewModel.AssignModel(Model.ShapedObjectA, model);
             Model.ShapedObjectB = shapedObjectFactories[0]();
-            ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB);
+            ShapedSettingsBViewModel.AssignModel(Model.ShapedObjectB, model);
             SendTestSpaceChangedMessage();
         }
 

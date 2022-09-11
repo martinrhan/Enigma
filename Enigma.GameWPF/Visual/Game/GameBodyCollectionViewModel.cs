@@ -7,9 +7,10 @@ namespace Enigma.GameWPF.Visual.Game {
         public double ViewWidth => View.ActualWidth;
         public double ViewHeight => View.ActualHeight;
         public void UpdateDataFromModel(GameWorld gameWorld, Camera camera) {
-            UpdateDataFromModel_Protected(gameWorld.AABBHitTest(camera.AABB), (gameBodyViewModel, gameBody) => {
-                gameBodyViewModel.UpdateDataFromModel(gameBody, this, camera);
-            });
+            UpdateDataFromModel_Protected(
+                gameWorld.AABBHitTest(camera.AABB),
+                (gameBodyViewModel, gameBody) => gameBodyViewModel.UpdateDataFromModel(gameBody, this, camera)
+            );
         }
     }
 }

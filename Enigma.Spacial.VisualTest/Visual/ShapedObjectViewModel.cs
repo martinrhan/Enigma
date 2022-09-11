@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ExtendedWPF;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Windows;
+using Enigma.Spacial.TestWPF.Models;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class ShapedObjectViewModel : ViewModel, IRecipient<ShapedObjectModelChangedMessage> {
@@ -15,25 +17,34 @@ namespace Enigma.Spacial.TestWPF.Visual {
 
         public double LowerBoundX { get; private set; }
         public double LowerBoundY { get; private set; }
+
         public double Width { get; private set; }
         public double Height { get; private set; }
+
+        public double ShapedObjectAABBWidth { get; private set; }
+        public double ShapedObjectAABBHeight { get; private set; }
 
         public CircleViewModel CircleViewModel { get; } = new CircleViewModel();
         public RectangleViewModel RectangleViewModel { get; } = new RectangleViewModel();
 
         public void Receive(ShapedObjectModelChangedMessage message) {
-            UpdateDataFromModel(message.ShapedObject);
+            UpdateDataFromModel(message.ShapedObject, message.TestSpace);
         }
 
-        public void UpdateDataFromModel(IShapedObject model) {
+        public void UpdateDataFromModel(IShapedObject model, TestSpace testSpace) {
+            ShapedObjectAABBWidth = model.AABB.Width;
+            ShapedObjectAABBHeight = model.AABB.Height;
+            Width = testSpace.Width + ShapedObjectAABBWidth;
+            Height = testSpace.Height + ShapedObjectAABBHeight;
             LowerBoundX = model.AABB.LowerBound.X;
+            if (model.AABB.UpperBound.X > testSpace.Width) {
+                LowerBoundX -= testSpace.Width;
+            } 
             LowerBoundY = model.AABB.LowerBound.Y;
-            Width = model.AABB.Width;
-            Height = model.AABB.Height;
-            NotifyPropertyChanged(nameof(LowerBoundX));
-            NotifyPropertyChanged(nameof(LowerBoundY));
-            NotifyPropertyChanged(nameof(Width));
-            NotifyPropertyChanged(nameof(Height));
+            if (model.AABB.UpperBound.Y > testSpace.Height){
+                LowerBoundY -= testSpace.Height;
+            }
+            NotifyPropertyChanged(null);
             if (model is CircleShapedObject cso) {
                 CircleViewModel.UpdateDataFromModel(cso);
             } else if (model is RectangleShapedObject rso) {

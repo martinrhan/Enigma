@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExtendedWPF;
 using CommunityToolkit.Mvvm.Messaging;
+using Enigma.Spacial.TestWPF.Models;
 
 namespace Enigma.Spacial.TestWPF.Visual {
     public class CircleShapedSettingsViewModel : ViewModel {
@@ -13,6 +14,9 @@ namespace Enigma.Spacial.TestWPF.Visual {
             this.messengerToken = messengerToken;
         }
         private readonly int messengerToken;
+        private void SendShapedObjectModelChangedMessage() {
+            WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { TestSpace = TestSpace, ShapedObject = Model }, messengerToken);
+        }
 
         public double Radius {
             get => Model == null ? 0 : Model.Shape.Radius;
@@ -20,25 +24,27 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 if (Model == null) return;
                 Model.Shape = Model.Shape.ChangeRadius(value);
                 NotifyPropertyChanged();
-                WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
+                SendShapedObjectModelChangedMessage();
             }
         }
 
         public Vector2 Center {
-            get => Model == null ? Vector2.Zero : Model.Shape.Center; 
+            get => Model == null ? Vector2.Zero : Model.Shape.Center;
             set {
                 if (Model == null) return;
                 Model.Shape = Model.Shape.ChangeCenter(value);
                 NotifyPropertyChanged();
-                WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
+                SendShapedObjectModelChangedMessage();
             }
         }
 
         public CircleShapedObject Model { get; private set; }
-        public void AssignModel(CircleShapedObject model) {
+        public TestSpace TestSpace { get; private set; }
+        public void AssignModel(CircleShapedObject model, TestSpace testSpace) {
             Model = model;
+            TestSpace = testSpace;
             NotifyPropertyChanged(null);
-            WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { ShapedObject = Model }, messengerToken);
+            SendShapedObjectModelChangedMessage();
         }
     }
 }
