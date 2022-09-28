@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:p = "clr-namespace:Enigma.GameWPF.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      ShowsNavigationUI="False" Background="White">
+      d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <StackPanel>
         <TextBlock x:Name="textBlock" Text="{x:Static p:Resources.Enigma}" TextWrapping="Wrap" FontSize="72" HorizontalAlignment="Center" Margin="0,100,0,0"/>
         <UniformGrid HorizontalAlignment="Center" Width="600" Margin="0,50,0,0" Rows="1">

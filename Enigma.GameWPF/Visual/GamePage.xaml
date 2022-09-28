@@ -6,10 +6,9 @@
       xmlns:local="clr-namespace:Enigma.GameWPF.Visual"
       xmlns:g="clr-namespace:Enigma.GameWPF.Visual.Game"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      ShowsNavigationUI="False" Background="White" Focusable="True"
-      Loaded="Page_Loaded" KeyDown="Page_KeyDown" KeyUp="Page_KeyUp" MouseDown="Page_MouseDown" MouseUp="Page_MouseUp" PreviewMouseWheel="Page_PreviewMouseWheel"
-      Unloaded="Page_Unloaded" FocusVisualStyle="{x:Null}">
+      d:DesignHeight="450" d:DesignWidth="800" Background="White"
+      KeyDown="Page_KeyDown" KeyUp="Page_KeyUp" MouseDown="Page_MouseDown" MouseUp="Page_MouseUp" PreviewMouseWheel="Page_PreviewMouseWheel"
+      Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <Grid>
         <g:GameWorldView ViewModel="{Binding GameWorldViewModel,ElementName=page}"></g:GameWorldView>
     </Grid>

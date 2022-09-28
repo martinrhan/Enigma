@@ -7,7 +7,7 @@
              xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
              xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding ViewModel.Visibility,ElementName=view}">
+             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding ViewModel.Visibility,ElementName=view}" Focusable="false">
     <TabControl x:Name="tabControl" SelectedIndex="{Binding ViewModel.SelectedIndex,ElementName=view, Mode=OneWay}">
         <TabControl.Template>
             <ControlTemplate TargetType="TabControl">
@@ -22,7 +22,7 @@
                     <ColumnDefinition Width="{Binding InventoryViewLeftMargin,ElementName=view}"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <local:InventoryView ViewModel="{Binding ViewModel.InventoryViewModel,ElementName=view}" HorizontalAlignment="Stretch" Grid.Column="1"></local:InventoryView>
+                <local:PlayerPanelView ViewModel="{Binding ViewModel.PlayerPanelViewModel,ElementName=view}" HorizontalAlignment="Stretch" Grid.Column="1"></local:PlayerPanelView>
             </Grid>
         </TabItem>
         <TabItem>

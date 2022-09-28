@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Enigma.Spacial.TestWPF.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Enigma.Common.Math;
-using ExtendedWPF;
-using CommunityToolkit.Mvvm.Messaging;
+using Enigma.Spacial.TestWPF.Models;
+using System;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class TestSpaceViewModel : ViewModel, IRecipient<ShapedObjectModelChangedMessage> {
+
         public TestSpaceViewModel() {
             WeakReferenceMessenger.Default.Register<TestSpaceViewModel, ShapedObjectModelChangedMessage, int>(this, 0, (r, m) => r.Receive(m));
             WeakReferenceMessenger.Default.Register<TestSpaceViewModel, ShapedObjectModelChangedMessage, int>(this, 1, (r, m) => r.Receive(m));
@@ -30,6 +27,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         };
 
         private int aSelectedShapedTypeIndex = 0;
+
         public int ASelectedShapedTypeIndex {
             get => aSelectedShapedTypeIndex;
             set {
@@ -42,6 +40,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         }
 
         private int bSelectedShapedTypeIndex = 0;
+
         public int BSelectedShapedTypeIndex {
             get => bSelectedShapedTypeIndex;
             set {
@@ -54,6 +53,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         }
 
         public TestSpace Model { get; private set; }
+
         public void AssignModel(TestSpace model) {
             Model = model;
             NotifyPropertyChanged(nameof(Width));
@@ -68,6 +68,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         private void SendTestSpaceChangedMessage() {
             WeakReferenceMessenger.Default.Send(new TestSpaceChangedMessage() { TestSpace = Model });
         }
+
         public void Receive(ShapedObjectModelChangedMessage message) {
             SendTestSpaceChangedMessage();
         }

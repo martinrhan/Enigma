@@ -14,11 +14,14 @@ namespace Enigma.GameWPF.Visual.Game {
         public int SelectedAbilityIndex { get; set; }
 
         public void UpdateDataFromModel(AbilityCollection abilityCollection, InputBindingManager inputBindingManager) {
-            UpdateDataFromModel_Protected(Enumerable.Range(0, inputBindingManager.SelectAbilityInputActions.Count), (viewModel, i) => {
-                var model = i >= abilityCollection.Count ? null : abilityCollection[i];
-                KeyOrMouseButton? input = inputBindingManager.ActionToInputDictionary[inputBindingManager.SelectAbilityInputActions[i]];
-                viewModel.UpdateDataFromModel(model, input, i == SelectedAbilityIndex);
-            });
+            UpdateDataFromModel_Protected(
+                Enumerable.Range(0, inputBindingManager.SelectAbilityInputActions.Count), 
+                (viewModel, i) => {
+                    Ability model = i >= abilityCollection.Count ? null : abilityCollection[i];
+                    KeyOrMouseButton? input = inputBindingManager.ActionToInputDictionary[inputBindingManager.SelectAbilityInputActions[i]];
+                    viewModel.UpdateDataFromModel(model, input, i == SelectedAbilityIndex);
+                }
+            );
         }
 
 

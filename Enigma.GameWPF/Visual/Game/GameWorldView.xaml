@@ -7,12 +7,12 @@
              xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
              xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Focusable="False">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="view_Loaded" IsTabStop="False" FocusVisualStyle="{x:Null}">
     <Grid>
         <local:GameBodyCollectionView ViewModel="{Binding ViewModel.GameBodyCollectionViewModel,ElementName=view}"></local:GameBodyCollectionView>
         <local:MinimapView ViewModel="{Binding ViewModel.MinimapViewModel,ElementName=view}" Width="200" Height="200" VerticalAlignment="Bottom" HorizontalAlignment="Right"></local:MinimapView>
-        <local:PlayerView x:Name="playerView" ViewModel="{Binding ViewModel.PlayerViewModel,ElementName=view}" Width="200" HorizontalAlignment="Left"></local:PlayerView>
-        <local:PausePanelsView ViewModel="{Binding ViewModel.PausePanelsViewModel,ElementName=view}" InventoryViewLeftMargin="{Binding ActualWidth,ElementName=playerView}"/>
+        <local:PlayerGameBodyInfoView x:Name="PlayerGameBodyInfoView" ViewModel="{Binding ViewModel.PlayerGameBodyInfoViewModel,ElementName=view}" Width="200" HorizontalAlignment="Left"></local:PlayerGameBodyInfoView>
+        <local:PausePanelsView ViewModel="{Binding ViewModel.PausePanelsViewModel,ElementName=view}"/>
         <local:FPSView ViewModel="{Binding ViewModel.FPSViewModel,ElementName=view}"></local:FPSView>
     </Grid>
 </v:View>

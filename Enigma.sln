@@ -30,10 +30,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSourceGenerator", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.Spacial.TestWPF", "Enigma.Spacial.VisualTest\Enigma.Spacial.TestWPF.csproj", "{99A4F35B-145E-4B18-A9B6-1C2CD57AFB6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedWPF", "ExtendedWPF\ExtendedWPF.csproj", "{8044A38C-AA0B-435F-AA07-67626D068302}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedWPF.SourceGenerator", "ExtendedWPF.SourceGenerator\ExtendedWPF.SourceGenerator.csproj", "{67234784-E82D-4D95-A457-5797947BDDD6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,14 +84,6 @@ Global
 		{99A4F35B-145E-4B18-A9B6-1C2CD57AFB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99A4F35B-145E-4B18-A9B6-1C2CD57AFB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99A4F35B-145E-4B18-A9B6-1C2CD57AFB6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8044A38C-AA0B-435F-AA07-67626D068302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8044A38C-AA0B-435F-AA07-67626D068302}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8044A38C-AA0B-435F-AA07-67626D068302}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8044A38C-AA0B-435F-AA07-67626D068302}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67234784-E82D-4D95-A457-5797947BDDD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67234784-E82D-4D95-A457-5797947BDDD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67234784-E82D-4D95-A457-5797947BDDD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67234784-E82D-4D95-A457-5797947BDDD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

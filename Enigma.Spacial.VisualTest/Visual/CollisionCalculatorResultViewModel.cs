@@ -1,19 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Enigma.Spacial.TestWPF.Models;
-using ExtendedWPF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class CollisionCalculatorResultViewModel : ViewModel, IRecipient<TestSpaceChangedMessage> {
+
         public CollisionCalculatorResultViewModel() {
             WeakReferenceMessenger.Default.Register<CollisionCalculatorResultViewModel, TestSpaceChangedMessage>(this, (r, m) => r.Receive(m));
         }
 
         private bool aABBIntersection;
+
         public bool AABBIntersection {
             get { return aABBIntersection; }
             set {
@@ -23,6 +20,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
         }
 
         private bool shapeCollision;
+
         public bool ShapeCollision {
             get { return shapeCollision; }
             set {

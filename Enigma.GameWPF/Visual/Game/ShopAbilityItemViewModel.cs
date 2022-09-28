@@ -1,26 +1,28 @@
-﻿using System;
+﻿using Enigma.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Enigma.Game;
 
 namespace Enigma.GameWPF.Visual.Game {
-    public class AbilityItemViewModel : ManualNotifyChangedViewModel {
-        public AbilityItemViewModel() {
+    public class ShopAbilityItemViewModel : ManualNotifyChangedViewModel {
+        public ShopAbilityItemViewModel() {
+
         }
 
         public string ItemName { get; private set; }
         public string Description { get; private set; }
-        public bool IsSlotEmpty { get; private set; }
+        public int Price { get; private set; }
+        public bool IsSold { get; private set; }
 
         public void UpdateDataFromModel(AbilityItem model) {
             if (model == null) {
-                IsSlotEmpty = true;
-                ItemName = "SlotEmpty";
+                IsSold = true;
             } else {
-                IsSlotEmpty = false;
+                IsSold = false;
                 ItemName = model.Template.Id;
+                Price = model.Price;
             }
         }
 

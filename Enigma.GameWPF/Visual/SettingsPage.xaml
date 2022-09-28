@@ -7,8 +7,7 @@
       xmlns:v_s="clr-namespace:Enigma.GameWPF.Visual.Settings"
       xmlns:local="clr-namespace:Enigma.GameWPF.Visual"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      ShowsNavigationUI="False" Background="White">
+      d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>

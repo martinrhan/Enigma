@@ -23,6 +23,7 @@ namespace Enigma.Game {
         private static readonly Dictionary<Rarity, List<T>> RarityListDictionary = new Dictionary<Rarity, List<T>>();
         private readonly Random random = new Random();
         protected T RollItem_Protected() {
+            start:
             int rand = random.Next(0, RarityValueDictionary.Values.Sum());
             int accumulated = 0;
             Rarity rolledRarity = default;
@@ -30,11 +31,12 @@ namespace Enigma.Game {
                 accumulated += RarityValueDictionary[rarity];
                 if (rand < accumulated) {
                     rolledRarity = rarity;
-                    break;
+                    IReadOnlyList<T> list = RarityListDictionary[rolledRarity];
+                    if (list.Count == 0) goto start;
+                    return list[random.Next(0, list.Count - 1)];
                 }
             }
-            IReadOnlyList<T> list = RarityListDictionary[rolledRarity];
-            return list[random.Next(0, list.Count - 1)];
+            throw new Exception();
         }
 
         internal static void Register(T item) {

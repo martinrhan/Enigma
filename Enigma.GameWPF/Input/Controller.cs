@@ -62,7 +62,7 @@ namespace Enigma.GameWPF.Input {
 
         public void AbilityButtonDown(int index, Point mousePosition) {
             if (player.PlayerGameBody.AbilityCollection[index] != null) {
-                gamePage.GameWorldViewModel.PlayerViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex = index;
+                gamePage.GameWorldViewModel.PlayerGameBodyInfoViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex = index;
             }
         }
         public void AbilityButtonUp(int index, Point mousePosition) {
@@ -79,7 +79,7 @@ namespace Enigma.GameWPF.Input {
             CastAbilityAtPointerButtonHold(mousePosition);
         }
         public void CastAbilityAtPointerButtonHold(Point mousePosition) {
-            int abilityIndex = gamePage.GameWorldViewModel.PlayerViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex;
+            int abilityIndex = gamePage.GameWorldViewModel.PlayerGameBodyInfoViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex;
             if (player.PlayerGameBody.AbilityCollection.Count <= abilityIndex || player.PlayerGameBody.AbilityCollection[abilityIndex] == null) return;
             if (player.PlayerGameBody.AbilityCollection[abilityIndex].EffectAssembly.CurrentPhase.IsIdling) {
                 gamePage.GameWorldViewModel.UserInputCollection.ToStartCastingIndexHashSet.Add(abilityIndex);

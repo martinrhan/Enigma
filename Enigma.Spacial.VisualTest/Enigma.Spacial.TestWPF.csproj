@@ -15,7 +15,6 @@
     <ProjectReference Include="..\Enigma.Common.WPF\Enigma.Common.WPF.csproj" />
     <ProjectReference Include="..\Enigma.Common\Enigma.Common.csproj" />
     <ProjectReference Include="..\Enigma.Spacial\Enigma.Spacial.csproj" />
-    <ProjectReference Include="..\ExtendedWPF\ExtendedWPF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +23,20 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Visual\CollectionViewModel.cs">
+      <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
+    </Compile>
+    <Compile Update="Visual\ViewModel.cs">
+      <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
 	<!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
 
 	<ItemGroup>
-	  <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+	  <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
 	  <Analyzer Remove="@(Analyzer)" />
 	  <Analyzer Include="@(FilteredAnalyzer)" />
 	</ItemGroup>

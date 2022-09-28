@@ -1,12 +1,11 @@
-﻿<exwpf:View x:TypeArguments="local:CircleViewModel" x:Name="view"
+﻿<local:View x:TypeArguments="local:CircleViewModel" x:Name="view"
     x:Class="Enigma.Spacial.TestWPF.Visual.CircleView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:exwpf ="clr-namespace:ExtendedWPF;assembly=ExtendedWPF"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Enigma.Spacial.TestWPF.Visual"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="50" Focusable="False">
     <Ellipse Stroke="Black"></Ellipse>
-</exwpf:View>
+</local:View>

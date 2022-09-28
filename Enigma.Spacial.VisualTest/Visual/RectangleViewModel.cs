@@ -1,21 +1,16 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Enigma.Common.Math;
-using ExtendedWPF;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Enigma.Common.Math;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class RectangleViewModel : ViewModel {
-        public RectangleViewModel() { }
+
+        public RectangleViewModel() {
+        }
 
         private PointCollection pointCollection;
+
         public PointCollection PointCollection {
             get => pointCollection;
             set {
@@ -32,6 +27,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 ConvertToPoint(model.Shape.Points[3] - model.AABB.LowerBound, model.AABB.Height)
             };
         }
+
         private Point ConvertToPoint(in Vector2 vector2, double aABBHeight) {
             return new Point(vector2.X, aABBHeight - vector2.Y);
         }

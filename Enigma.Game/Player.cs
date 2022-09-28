@@ -11,10 +11,10 @@ namespace Enigma.Game {
         internal Player(PlayerGameBodyBehaviour playerGameBodyBehaviour, GameBody playerGameBody) {
             PlayerGameBodyBehaviour = playerGameBodyBehaviour;
             PlayerGameBody = playerGameBody;
-            Inventory =  new Inventory(PlayerGameBody.AbilityCollection);
         }
         public PlayerGameBodyBehaviour PlayerGameBodyBehaviour { get; } = new PlayerGameBodyBehaviour();
-        public Inventory Inventory { get; } 
+        public Inventory Inventory { get; } = new Inventory();
+        public Shop Shop { get; } = new Shop();
         public GameBody PlayerGameBody { get; }
     }
 }

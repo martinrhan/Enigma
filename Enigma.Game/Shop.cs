@@ -7,17 +7,23 @@ using System.Threading.Tasks;
 namespace Enigma.Game {
     public class Shop : RarityObjectRoller<AbilityTemplate> {
         internal Shop() {
+            ItemCount = 3;
+            RollItems();
         }
-        public int ItemCount { get; set; }
+        public int ItemCount { get; set; } 
         private readonly List<AbilityItem> itemList = new List<AbilityItem>();
         public IReadOnlyList<AbilityItem> ItemList => itemList;
         public void RollItems() {
             itemList.Clear();
             for (int i = 0; i < ItemCount; i++) {
-                itemList.Add(new(RollItem_Protected()));
+                AbilityItem rolledItem;
+                do {
+                    rolledItem = new(RollItem_Protected());
+                } while (itemList.Contains(rolledItem));
+                itemList.Add(rolledItem);
             }
         }
-        public void SellAbilityItem(int itemIndex, Inventory buyerInventory) {
+        internal void SellAbilityItem(int itemIndex, Inventory buyerInventory) {
             int price = itemList[itemIndex].Template.Price;
             if (buyerInventory.Gold < price) {
                 throw new ArgumentException("The given buyer inventory does have enough gold to buy the item");

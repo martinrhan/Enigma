@@ -28,7 +28,7 @@ namespace Enigma.GameWPF.Visual.Game {
         public GameBodyCollectionViewModel GameBodyCollectionViewModel { get; } = new GameBodyCollectionViewModel();
         public MinimapViewModel MinimapViewModel { get; } = new MinimapViewModel();
         public PausePanelsViewModel PausePanelsViewModel { get; } = new PausePanelsViewModel();
-        public PlayerViewModel PlayerViewModel { get; } = new PlayerViewModel();
+        public PlayerGameBodyInfoViewModel PlayerGameBodyInfoViewModel { get; } = new PlayerGameBodyInfoViewModel();
         public FPSViewModel FPSViewModel { get; } = new FPSViewModel();
 
         private readonly Stopwatch stopwatch = new Stopwatch();
@@ -73,15 +73,15 @@ namespace Enigma.GameWPF.Visual.Game {
             }
             GameBodyCollectionViewModel.UpdateDataFromModel(gameWorld, Camera);
             MinimapViewModel.UpdateDataFromModel(gameWorld, Camera);
-            PausePanelsViewModel.UpdateDataFromModel(gameWorld.EnemyWaveManager, player.Inventory);
-            PlayerViewModel.UpdateDataFromModel(player, inputBindingManager);
+            PausePanelsViewModel.UpdateDataFromModel(gameWorld.EnemyWaveManager, player, inputBindingManager);
+            PlayerGameBodyInfoViewModel.UpdateDataFromModel(player, inputBindingManager);
         }
 
         private void NotifyChanged() {
             GameBodyCollectionViewModel.NotifyChanged();
             MinimapViewModel.NotifyChanged();
             PausePanelsViewModel.NotifyChanged();
-            PlayerViewModel.NotifyChanged();
+            PlayerGameBodyInfoViewModel.NotifyChanged();
         }
 
         public void Dispose() {

@@ -1,4 +1,5 @@
 ﻿using Enigma.Game;
+using Enigma.GameWPF.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Enigma.GameWPF.Visual.Game {
         }
 
         public EnemyWaveManagerViewModel EnemyWaveManagerViewModel { get; } = new EnemyWaveManagerViewModel();
-        public InventoryViewModel InventoryViewModel { get; } = new InventoryViewModel();
+        public PlayerPanelViewModel PlayerPanelViewModel { get; } = new PlayerPanelViewModel();
 
         private const int InventoryTabIndex = 0;
         private const int EnemyWaveManagerTabIndex = 1;
@@ -69,9 +70,9 @@ namespace Enigma.GameWPF.Visual.Game {
             }
         }
 
-        public void UpdateDataFromModel(EnemyWaveManager enemyWaveManager, Inventory inventory) {
+        public void UpdateDataFromModel(EnemyWaveManager enemyWaveManager, Player player, InputBindingManager inputBindingManager) {
             EnemyWaveManagerViewModel.UpdateDataFromModel(enemyWaveManager);
-            InventoryViewModel.UpdateDataFromModel(inventory);
+            PlayerPanelViewModel.UpdateDataFromModel(player, inputBindingManager);
         }
         public void NotifyChanged() {
         }

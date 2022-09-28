@@ -1,9 +1,9 @@
-﻿using ExtendedWPF;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public partial class ShapedObjectView : View<ShapedObjectViewModel> {
+
         public ShapedObjectView() {
             InitializeComponent();
         }
@@ -12,6 +12,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
             get { return (int)GetValue(SelectedShapedTypeIndexProperty); }
             set { SetValue(SelectedShapedTypeIndexProperty, value); }
         }
+
         public static readonly DependencyProperty SelectedShapedTypeIndexProperty =
             DependencyProperty.Register("SelectedShapedTypeIndex", typeof(int), typeof(ShapedObjectView), new PropertyMetadata(0));
     }

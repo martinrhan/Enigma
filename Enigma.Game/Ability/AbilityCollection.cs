@@ -14,7 +14,6 @@ namespace Enigma.Game {
         public AbilityCollection DeepCopy() {
             return new AbilityCollection(this.Select(ability => ability.Template.New()));
         }
-
     }
 
     public class AbilityCollectionConstructorElement {

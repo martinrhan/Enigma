@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Enigma.Common.Math;
 using Enigma.Spacial.TestWPF.Models;
-using ExtendedWPF;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class RectangleShapedSettingsViewModel : ViewModel {
+
         public RectangleShapedSettingsViewModel(int messengerToken) {
             this.messengerToken = messengerToken;
         }
+
         private int messengerToken;
+
         private void SendShapedObjectModelChangedMessage() {
             WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { TestSpace = TestSpace, ShapedObject = Model }, messengerToken);
         }
@@ -30,6 +28,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 SendShapedObjectModelChangedMessage();
             }
         }
+
         public Vector2 P1 => Model == null ? Vector2.Zero : Model.Shape.Points[1];
         public Vector2 P2 => Model == null ? Vector2.Zero : Model.Shape.Points[2];
         public Vector2 P3 => Model == null ? Vector2.Zero : Model.Shape.Points[3];
@@ -45,6 +44,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 SendShapedObjectModelChangedMessage();
             }
         }
+
         public double Height {
             get => Model == null ? 0 : Model.Shape.Height;
             set {
@@ -68,6 +68,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
 
         public RectangleShapedObject Model { get; private set; }
         public TestSpace TestSpace { get; private set; }
+
         public void AssignModel(RectangleShapedObject model, TestSpace testSpace) {
             Model = model;
             TestSpace = testSpace;

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Enigma.Game.Entities.AbilityEffectComponents {
-    public class CircularSectorAreaDamage : AbilityEffectComponent {
-        public CircularSectorAreaDamage(AbilityEffectComponentFactoryArguments arguments) {
+    public class CircularSectorAreaDamageComponent : AbilityEffectComponent {
+        public CircularSectorAreaDamageComponent(AbilityEffectComponentFactoryArguments arguments) {
         }
 
         public void Invoke(AbilityEffectAssembly.UpdateInterface updateInterface, in InvokeArguments arguments) {

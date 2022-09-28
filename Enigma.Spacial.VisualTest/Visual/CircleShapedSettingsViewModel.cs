@@ -1,19 +1,17 @@
-﻿using Enigma.Common.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExtendedWPF;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Enigma.Common.Math;
 using Enigma.Spacial.TestWPF.Models;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class CircleShapedSettingsViewModel : ViewModel {
+
         public CircleShapedSettingsViewModel(int messengerToken) {
             this.messengerToken = messengerToken;
         }
+
         private readonly int messengerToken;
+
         private void SendShapedObjectModelChangedMessage() {
             WeakReferenceMessenger.Default.Send(new ShapedObjectModelChangedMessage() { TestSpace = TestSpace, ShapedObject = Model }, messengerToken);
         }
@@ -40,6 +38,7 @@ namespace Enigma.Spacial.TestWPF.Visual {
 
         public CircleShapedObject Model { get; private set; }
         public TestSpace TestSpace { get; private set; }
+
         public void AssignModel(CircleShapedObject model, TestSpace testSpace) {
             Model = model;
             TestSpace = testSpace;

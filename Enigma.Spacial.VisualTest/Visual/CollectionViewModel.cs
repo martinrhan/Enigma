@@ -3,21 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace ExtendedWPF {
+namespace Enigma.Spacial.TestWPF.Visual {
+
     public abstract class CollectionViewModel<TViewModel, TModel> : ViewModel, IReadOnlyList<TViewModel>, INotifyCollectionChanged where TViewModel : ViewModel, new() {
+
         public event NotifyCollectionChangedEventHandler CollectionChanged;
+
         protected void NotifyCollectionChanged(NotifyCollectionChangedEventArgs e) {
             CollectionChanged?.Invoke(this, e);
         }
 
         public IEnumerator<TViewModel> GetEnumerator() => viewModelList.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public int Count => viewModelList.Count;
         public TViewModel this[int index] => viewModelList[index];
 
         private readonly List<TViewModel> viewModelList = new();
         private int nonEmptyCount = 0;
         private int lastNotifyNonEmptyCount = 0;
+
         protected void UpdateDataFromModel_Protected(IEnumerable<TModel> models, Action<TViewModel, TModel> action) {
             int i = 0;
             addRecord = new List<TViewModel>();

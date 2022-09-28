@@ -1,16 +1,10 @@
-﻿using Enigma.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExtendedWPF;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Windows;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Enigma.Spacial.TestWPF.Models;
 
 namespace Enigma.Spacial.TestWPF.Visual {
+
     public class ShapedObjectViewModel : ViewModel, IRecipient<ShapedObjectModelChangedMessage> {
+
         public ShapedObjectViewModel(int messengerToken) {
             WeakReferenceMessenger.Default.Register<ShapedObjectViewModel, ShapedObjectModelChangedMessage, int>(this, messengerToken, (r, m) => r.Receive(m));
         }
@@ -39,9 +33,9 @@ namespace Enigma.Spacial.TestWPF.Visual {
             LowerBoundX = model.AABB.LowerBound.X;
             if (model.AABB.UpperBound.X > testSpace.Width) {
                 LowerBoundX -= testSpace.Width;
-            } 
+            }
             LowerBoundY = model.AABB.LowerBound.Y;
-            if (model.AABB.UpperBound.Y > testSpace.Height){
+            if (model.AABB.UpperBound.Y > testSpace.Height) {
                 LowerBoundY -= testSpace.Height;
             }
             NotifyPropertyChanged(null);
@@ -51,6 +45,5 @@ namespace Enigma.Spacial.TestWPF.Visual {
                 RectangleViewModel.UpdateDataFromModel(rso);
             }
         }
-
     }
 }

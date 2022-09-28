@@ -38,15 +38,16 @@ namespace Enigma.Common.Collections {
             targetCollection.array[indexTo] = this[indexFrom];
             this[indexFrom] = temp;
         }
-        protected void ExternalExchange<TTarget>(int indexFrom, int indexTo, SlottedCollection<TTarget> targetCollection, Func<T, TTarget> conversionFunction_From, Func<TTarget, T> conversionFunction_To) where TTarget : class {
+        protected void ExternalExchange<TTarget>(int indexFrom, int indexTo, SlottedCollection<TTarget> targetCollection, Func<T, TTarget> conversionFunction_Out, Func<TTarget, T> conversionFunction_In) where TTarget : class {
             var temp = targetCollection.array[indexTo];
-            targetCollection.array[indexTo] = this[indexFrom] == null ? null : conversionFunction_From(this[indexFrom]);
-            this[indexFrom] = temp == null ? null : conversionFunction_To(temp);
+            targetCollection.array[indexTo] = this[indexFrom] == null ? null : conversionFunction_Out(this[indexFrom]);
+            this[indexFrom] = temp == null ? null : conversionFunction_In(temp);
         }
         protected void PlaceAtFirstEmptySlot(T item) {
             for (int i = 0; i < array.Length; i++) {
                 if (array[i] == null) {
                     array[i] = item;
+                    return;
                 }
             }
             throw new InvalidOperationException("There is no any empty slot.");

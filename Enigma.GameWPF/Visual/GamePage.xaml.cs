@@ -28,7 +28,6 @@ namespace Enigma.GameWPF.Visual {
         private void Page_Loaded(object sender, RoutedEventArgs e) {
             eventHandler = new EventHandler(CheckMouseInput);
             CompositionTarget.Rendering += eventHandler;
-            Focus();
         }
         private void Page_KeyDown(object sender, KeyEventArgs e) {//In WPF, pressing key cause keydown event called repeatedly
             //Debug.WriteLine(e.Key.ToString());

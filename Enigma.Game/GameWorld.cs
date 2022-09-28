@@ -27,8 +27,6 @@ namespace Enigma.Game {
 
         public EnemyWaveManager EnemyWaveManager { get; } = new EnemyWaveManager();
 
-        public Shop Shop { get; } = new Shop();
-
         private Task updateTask = Task.CompletedTask;
         public Task BeginUpdate(double deltaTime, IReadOnlyList<PlayerBehaviourUpdateData> playerBehaviourUpdateDataList) {
             if (playerBehaviourUpdateDataList.Count < playerGameBodyList.Count)

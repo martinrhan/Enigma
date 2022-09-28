@@ -13,6 +13,9 @@ namespace Enigma.GameWPF.Visual {
         protected void NotifyPropertyChanged([CallerMemberName] String propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        /// <summary>
+        /// This field should only be set by CollectionViewModel, use other name such as IsSlotEmpty for similar purpose.
+        /// </summary>
         public bool IsEmpty { get; set; }
     }
 
@@ -22,9 +25,6 @@ namespace Enigma.GameWPF.Visual {
 
     public abstract class CollectionViewModel<TViewModel, TModel> : ManualNotifyChangedViewModel, IReadOnlyList<TViewModel>, INotifyCollectionChanged where TViewModel : ManualNotifyChangedViewModel, new() {
         public event NotifyCollectionChangedEventHandler CollectionChanged;
-        protected void NotifyCollectionChanged(NotifyCollectionChangedEventArgs e) {
-            CollectionChanged?.Invoke(this, e);
-        }
 
         public IEnumerator<TViewModel> GetEnumerator() => viewModelList.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -56,7 +56,7 @@ namespace Enigma.GameWPF.Visual {
 
         public override void NotifyChanged() {
             foreach (TViewModel viewModel in addRecord) {
-                NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, viewModel));
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, viewModel));
             }
             addRecord.Clear();
             int greaterInt = Math.Max(nonEmptyCount, lastNotifyNonEmptyCount);
@@ -64,8 +64,13 @@ namespace Enigma.GameWPF.Visual {
                 viewModelList[i].NotifyChanged();
             }
             lastNotifyNonEmptyCount = nonEmptyCount;
+            NotifyPropertyChanged(null);
         }
-
     }
 
+    public sealed class GeneralCollectionViewModel<TViewModel, TModel> : CollectionViewModel<TViewModel, TModel> where TViewModel : ManualNotifyChangedViewModel, new() {
+        public void UpdateDataFromModel(IEnumerable<TModel> models, Action<TViewModel, TModel> action) {
+            UpdateDataFromModel_Protected(models, action);
+        }
+    }
 }

@@ -7,7 +7,7 @@ using Enigma.Game;
 using Enigma.GameWPF.Input;
 
 namespace Enigma.GameWPF.Visual.Game {
-    public class PlayerViewModel : ManualNotifyChangedViewModel {
+    public class PlayerGameBodyInfoViewModel : ManualNotifyChangedViewModel {
         public SelectableAbilitiesViewModel SelectableAbilitiesViewModel { get;} = new SelectableAbilitiesViewModel();
 
 
