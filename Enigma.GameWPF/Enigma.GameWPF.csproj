@@ -10,9 +10,18 @@
 	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	<LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="ValueConverters" Version="2.2.10" />
+	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	<PackageReference Include="ValueConverters" Version="2.2.10" />
+	<PackageReference Include="DependencyPropertyGenerator" Version="1.0.3" PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
   
   <ItemGroup>
@@ -50,4 +59,13 @@
 	  <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
 	</Compile>
   </ItemGroup>
+
+  <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+	<!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
+	<ItemGroup>
+	  <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
+	  <Analyzer Remove="@(Analyzer)" />
+	  <Analyzer Include="@(FilteredAnalyzer)" />
+	</ItemGroup>
+  </Target>
 </Project>

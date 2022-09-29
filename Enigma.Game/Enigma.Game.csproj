@@ -5,7 +5,8 @@
 	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.2.0" />
+	<PackageReference Include="Microsoft.CodeAnalysis" Version="4.3.0" />
+	<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,5 +14,5 @@
 	<ProjectReference Include="..\TestSourceGenerator\TestSourceGenerator.csproj" OutputItemType="Analyzer" />
 	<ProjectReference Include="..\Enigma.PhysicsEngine\Enigma.PhysicsEngine.csproj" />
   </ItemGroup>
-  
+
 </Project>

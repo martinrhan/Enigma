@@ -20,7 +20,7 @@
                 </StackPanel>
             </Grid>
             <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding ViewModel.IsSold, RelativeSource={RelativeSource Self}}" Value="True">
+                <DataTrigger Binding="{Binding ViewModel.IsSold, ElementName=view}" Value="True">
                     <Setter TargetName="textBlock_Sold" Property="Visibility" Value="Visible"></Setter>
                     <Setter TargetName="panel" Property="Visibility" Value="Hidden"></Setter>
                 </DataTrigger>
