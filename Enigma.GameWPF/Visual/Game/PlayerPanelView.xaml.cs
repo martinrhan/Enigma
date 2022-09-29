@@ -1,7 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using DependencyPropertyGenerator;
 
 namespace Enigma.GameWPF.Visual.Game {
+    [DependencyProperty<Visibility>("ShopViewVisibility", DefaultValue = Visibility.Visible)]
+    [DependencyProperty<Visibility>("EquipmentViewVisibility", DefaultValue = Visibility.Collapsed)]
+    [DependencyProperty<ShopAbilityItemView>("SelectedShopItemView")]
+    [DependencyProperty<AbilityItemView>("SelectedInventoryItemView")]
+    [DependencyProperty<EquipmentAbilityItemView>("SelectedEquipmentItemView")]
     public partial class PlayerPanelView : View<PlayerPanelViewModel> {
         public PlayerPanelView() {
             InitializeComponent();
@@ -13,49 +19,22 @@ namespace Enigma.GameWPF.Visual.Game {
         }
 
         private void Click_Button_Equipment(object sender, RoutedEventArgs e) {
-            EquipmentVisibility = Visibility.Visible;
-            ShopVisibility = Visibility.Collapsed;
+            EquipmentViewVisibility = Visibility.Visible;
+            ShopViewVisibility = Visibility.Collapsed;
         }
         private void Click_Button_Shop(object sender, RoutedEventArgs e) {
-            ShopVisibility = Visibility.Visible;
-            EquipmentVisibility = Visibility.Collapsed;
+            ShopViewVisibility = Visibility.Visible;
+            EquipmentViewVisibility = Visibility.Collapsed;
         }
-        private void Click_Button_Buy(object sender, RoutedEventArgs e) {
-            ViewModel.Inventory.BuyAbilityItem(listView_Shop.SelectedIndex, ViewModel.Shop);
+        private void MouseLeftButtonDown_ShopAbilityItemView(object sender, RoutedEventArgs e) {
+            ShopAbilityItemView control = (ShopAbilityItemView)sender;
+        }
+        private void MouseLeftButtonDown_Control_InventoryItem(object sender, RoutedEventArgs e) {
             ViewModel.UpdateDataFromModel();
         }
-        private void Click_Button_Sell(object sender, RoutedEventArgs e) {
-            ViewModel.Inventory.SellAbilityItem(listView_Inventory.SelectedIndex);
+        private void MouseRightButtonDown_Control_InventoryItem(object sender, RoutedEventArgs e) {
             ViewModel.UpdateDataFromModel();
         }
-        private void Click_Button_Move(object sender, RoutedEventArgs e) {
-            ViewModel.Inventory.SellAbilityItem(listView_Inventory.SelectedIndex);
-            ViewModel.UpdateDataFromModel();
-        }
-        private void Click_Button_Equip(object sender, RoutedEventArgs e) {
-
-            ViewModel.UpdateDataFromModel();
-        }
-        private void ExchangeInventoryEquipment(object sender, RoutedEventArgs e) {
-            ViewModel.Inventory.ExchangeWithAbilityCollection(ViewModel.Player.PlayerGameBody.AbilityCollection, listView_Inventory.SelectedIndex, listView_Equipment.SelectedIndex);
-            ViewModel.UpdateDataFromModel();
-        }
-
-        public Visibility ShopVisibility {
-            get { return (Visibility)GetValue(ShopVisibilityProperty); }
-            set { SetValue(ShopVisibilityProperty, value); }
-        }
-        public static readonly DependencyProperty ShopVisibilityProperty =
-            DependencyProperty.Register("ShopVisibility", typeof(Visibility), typeof(PlayerPanelView), new PropertyMetadata(Visibility.Collapsed));
-
-        public Visibility EquipmentVisibility {
-            get { return (Visibility)GetValue(EquipmentVisibilityProperty); }
-            set { SetValue(EquipmentVisibilityProperty, value); }
-        }
-        public static readonly DependencyProperty EquipmentVisibilityProperty =
-            DependencyProperty.Register("EquipmentVisibility", typeof(Visibility), typeof(PlayerPanelView), new PropertyMetadata(Visibility.Visible));
-
-
 
     }
 }

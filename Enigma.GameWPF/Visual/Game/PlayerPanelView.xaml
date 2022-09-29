@@ -61,9 +61,9 @@
                 </Style.Triggers>
             </Style>
         </UniformGrid.Resources>
-        <Grid x:Name="equipmentView" DockPanel.Dock="Left" Visibility="{Binding EquipmentVisibility, ElementName=view}">
+        <Grid x:Name="equipmentView" DockPanel.Dock="Left" Visibility="{Binding EquipmentViewVisibility, ElementName=view}">
             <TextBlock FontSize="36" HorizontalAlignment="Center">Equipment</TextBlock>
-            <ListView x:Name="listView_Equipment" ItemsSource="{Binding ViewModel.EquipmentItemsViewModel,ElementName=view}">
+            <ItemsControl x:Name="itemsControl_Equipment" ItemsSource="{Binding ViewModel.EquipmentItemsViewModel,ElementName=view}">
                 <Control.Template>
                     <ControlTemplate>
                         <StackPanel IsItemsHost="True"></StackPanel>
@@ -71,20 +71,19 @@
                 </Control.Template>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel>
-                            <Button Style="{StaticResource ItemButtonsContainerStyle}"/>
+                        <Button Style="{StaticResource ItemButtonsContainerStyle}">
                             <local:EquipmentAbilityItemView x:Name="equipmentAbilityItemView" ViewModel="{Binding}"/>
-                        </DockPanel>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ListView>
+            </ItemsControl>
         </Grid>
         <Grid>
             <Button VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Visibility,ElementName=shopView}" Click="Click_Button_Equipment">Equipment</Button>
             <Button VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding Visibility,ElementName=equipmentView}" Click="Click_Button_Shop">Shop</Button>
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center" FontSize="36">Inventory</TextBlock>
-                <ListView x:Name="listView_Inventory" ItemsSource="{Binding ViewModel.InventoryItemsViewModel,ElementName=view}" Focusable="False">
+                <ItemsControl x:Name="itemsControl_Inventory" ItemsSource="{Binding ViewModel.InventoryItemsViewModel,ElementName=view}" Focusable="False">
                     <Control.Template>
                         <ControlTemplate>
                             <StackPanel IsItemsHost="True"></StackPanel>
@@ -92,22 +91,19 @@
                     </Control.Template>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel>
-                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Style="{StaticResource ItemButtonsContainerStyle}">
-                                    <Button Click="Click_Button_Move" Content="Move"/>
-                                    <Button Click="Click_Button_Sell" Content="Sell"/>
-                                </StackPanel>
+                            <Grid>
+                                <ContentControl></ContentControl>
                                 <local:AbilityItemView x:Name="abilityItemView" ViewModel="{Binding}"/>
-                            </DockPanel>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListView>
+                </ItemsControl>
             </StackPanel>
         </Grid>
-        <Grid x:Name="shopView" DockPanel.Dock="Right" Visibility="{Binding ShopVisibility,ElementName=view}">
+        <Grid x:Name="shopView" DockPanel.Dock="Right" Visibility="{Binding ShopViewVisibility,ElementName=view}">
             <StackPanel>
                 <TextBlock FontSize="36" HorizontalAlignment="Center">Shop</TextBlock>
-                <ListView x:Name="listView_Shop" ItemsSource="{Binding ViewModel.ShopItemsViewModel,ElementName=view}" Focusable="False">
+                <ItemsControl x:Name="itemsControl_Shop" ItemsSource="{Binding ViewModel.ShopItemsViewModel,ElementName=view}" Focusable="False">
                     <Control.Template>
                         <ControlTemplate>
                             <StackPanel IsItemsHost="True"></StackPanel>
@@ -115,14 +111,10 @@
                     </Control.Template>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel>
-                                <Button Click="Click_Button_Buy" Style="{StaticResource ItemButtonsContainerStyle}"
-                                IsEnabled="{Binding ViewModel.IsSold,ElementName=shopAbilityItemView, Converter={StaticResource InverseBoolConverter}}">Buy</Button>
                                 <local:ShopAbilityItemView x:Name="shopAbilityItemView" ViewModel="{Binding}"/>
-                            </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListView>
+                </ItemsControl>
             </StackPanel>
         </Grid>
     </UniformGrid>
