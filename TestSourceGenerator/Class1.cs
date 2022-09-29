@@ -7,7 +7,7 @@ namespace TestSourceGenerator {
         }
 
         public void Execute(GeneratorExecutionContext context) {
-            context.AddSource("bbb.cs", "");
+            context.AddSource("TestGenerated.cs", "");
         }
     }
 }

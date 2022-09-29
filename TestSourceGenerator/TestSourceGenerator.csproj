@@ -7,7 +7,6 @@
 	<IsRoslynComponent>true</IsRoslynComponent>
 	<LangVersion>latest</LangVersion>
 	<AnalysisLevel>none</AnalysisLevel>
-	<EnableNETAnalyzers>False</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

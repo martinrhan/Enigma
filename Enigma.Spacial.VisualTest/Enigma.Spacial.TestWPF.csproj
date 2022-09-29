@@ -23,18 +23,8 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Visual\CollectionViewModel.cs">
-      <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
-    </Compile>
-    <Compile Update="Visual\ViewModel.cs">
-      <DependentUpon>$([System.String]::Copy('%(FileName)').Replace('Model', '.xaml'))</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
 	<!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
-
 	<ItemGroup>
 	  <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
 	  <Analyzer Remove="@(Analyzer)" />

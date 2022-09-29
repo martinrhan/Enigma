@@ -31,7 +31,7 @@ namespace Enigma.Game.SourceGenerator {
                     AddJsonObject(context, map, typeDeclarationSyntax);
                 }
             }
-            context.AddSource("aaa.cs", "");
+            context.AddSource("TestGenerated.cs", "");
         }
 
         private readonly HashSet<string> addedJsonObjectTypes = new HashSet<string>();
