@@ -24,5 +24,6 @@
         </Setter>
     </Style>
     <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <c:VisibilityInverter x:Key="BoolToVisibilityInversedConverter"/>
     <c:InverseBoolConverter x:Key="InverseBoolConverter"/>
 </ResourceDictionary>

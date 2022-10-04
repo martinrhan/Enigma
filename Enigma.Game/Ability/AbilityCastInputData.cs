@@ -15,9 +15,6 @@ namespace Enigma.Game {
 
         internal void Update(IEnumerable<ValueTuple<int, AbilityCastInputData>> inputDatas) {
             foreach (var inputData in inputDatas) {
-                if (inputData.Item1 >= array.Length) {
-                    Array.Resize(ref array, inputData.Item1 + 1);
-                }
                 array[inputData.Item1] = inputData.Item2;
             }
         }
@@ -28,6 +25,12 @@ namespace Enigma.Game {
                     Array.Resize(ref array, index + 1);
                 }
                 return array[index];
+            }
+        }
+
+        internal void ResizeIfSmaller(int count) {
+            if (array.Length < count) {
+                Array.Resize(ref array, count);
             }
         }
     }

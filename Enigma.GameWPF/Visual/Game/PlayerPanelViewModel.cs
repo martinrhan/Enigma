@@ -21,8 +21,6 @@ namespace Enigma.GameWPF.Visual.Game {
 
         public Player Player { get; private set; }
         public InputBindingManager InputBindingManager { get; private set; }
-        public Inventory Inventory => Player.Inventory;
-        public Shop Shop => Player.Shop;
 
         public void UpdateDataFromModel() {
             UpdateDataFromModel(Player, InputBindingManager);
@@ -31,10 +29,11 @@ namespace Enigma.GameWPF.Visual.Game {
             Player = model;
             InputBindingManager = inputBindingManager;
             AbilityCollection abilityCollection = model.PlayerGameBody.AbilityCollection;
+            Player.ResizeAbilityCollection(inputBindingManager.SelectAbilityInputActions.Count);
             EquipmentItemsViewModel.UpdateDataFromModel(
                 Enumerable.Range(0, inputBindingManager.SelectAbilityInputActions.Count), 
                 (viewModel, i) => {
-                    Ability model = i >= abilityCollection.Count ? null : abilityCollection[i];
+                    Ability model = abilityCollection[i];
                     KeyOrMouseButton? input = inputBindingManager.ActionToInputDictionary[inputBindingManager.SelectAbilityInputActions[i]];
                     viewModel.UpdateDataFromModel(model, input);
                 }
@@ -50,6 +49,7 @@ namespace Enigma.GameWPF.Visual.Game {
             NotifyPropertyChanged(null);
             InventoryItemsViewModel.NotifyChanged();
             ShopItemsViewModel.NotifyChanged();
+            EquipmentItemsViewModel.NotifyChanged();
         }
     }
 }

@@ -18,8 +18,6 @@ namespace Enigma.GameWPF.Visual.Game {
         public KeyOrMouseButton? BindedInput { get; private set; }
         public bool IsSlotEmpty { get; private set; }
 
-        public bool IsSelected { get; set; }
-
         private ContentControl iconView;
         public ContentControl IconView => iconView;
 

@@ -1,4 +1,5 @@
 ﻿using Enigma.Common.Collections;
+using System;
 
 namespace Enigma.Game {
     public sealed class Inventory : SlottedCollection<AbilityItem> {
@@ -6,20 +7,11 @@ namespace Enigma.Game {
 
         public int Gold { get; internal set; } = 100;
 
-        public new void InternalExchange(int indexFrom, int indexTo) {
-            base.InternalExchange(indexFrom, indexTo);
-        }
-        public void ExchangeWithAbilityCollection(AbilityCollection abilityCollection,int indexFrom, int indexTo) {
+        internal new void InternalExchange(int indexA, int indexB) => base.InternalExchange(indexA, indexB);
+        internal void ExchangeWithAbilityCollection(AbilityCollection abilityCollection, int indexFrom, int indexTo) {
             ExternalExchange(indexFrom, indexTo, abilityCollection, abilityItem => abilityItem.ConvertToAblity(), ability => ability.ConvertToAbilityItem());
         }
-        internal new void PlaceAtFirstEmptySlot(AbilityItem item) {
-            base.PlaceAtFirstEmptySlot(item);
-        }
-        public void SellAbilityItem(int itemIndex) {
-
-        }
-        public void BuyAbilityItem(int itemIndex, Shop shop) {
-            shop.SellAbilityItem(itemIndex, this);
-        }
+        internal void PlaceAt(int index, AbilityItem abilityItem) => base[index] = abilityItem;
+        internal void RemoveAt(int index) => base[index] = null;
     }
 }

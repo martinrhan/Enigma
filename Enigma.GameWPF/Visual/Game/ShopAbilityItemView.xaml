@@ -7,24 +7,15 @@
              xmlns:v ="clr-namespace:Enigma.GameWPF.Visual"
              xmlns:local="clr-namespace:Enigma.GameWPF.Visual.Game"
         mc:Ignorable="d" Focusable="False">
-    <ContentControl.Template>
-        <ControlTemplate>
-            <Grid>
-                <TextBlock x:Name="textBlock_Sold" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center">Sold</TextBlock>
-                <StackPanel x:Name="panel">
-                    <TextBlock Text="{Binding ViewModel.ItemName,ElementName=view}"></TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>Price:</TextBlock>
-                        <TextBlock></TextBlock>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding ViewModel.IsSold, ElementName=view}" Value="True">
-                    <Setter TargetName="textBlock_Sold" Property="Visibility" Value="Visible"></Setter>
-                    <Setter TargetName="panel" Property="Visibility" Value="Hidden"></Setter>
-                </DataTrigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </ContentControl.Template>
+    <Grid>
+        <TextBlock x:Name="textBlock_Sold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Visibility="{Binding ViewModel.IsSold,ElementName=view, Converter={StaticResource BoolToVisibilityConverter}}">Sold</TextBlock>
+        <StackPanel x:Name="panel" Visibility="{Binding ViewModel.IsSold,ElementName=view, Converter={StaticResource BoolToVisibilityInversedConverter}}">
+            <TextBlock Text="{Binding ViewModel.ItemName,ElementName=view}"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Price:</TextBlock>
+                <TextBlock></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </v:View>

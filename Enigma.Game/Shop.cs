@@ -11,7 +11,7 @@ namespace Enigma.Game {
             RollItems();
         }
         public int ItemCount { get; set; } 
-        private readonly List<AbilityItem> itemList = new List<AbilityItem>();
+        internal readonly List<AbilityItem> itemList = new List<AbilityItem>();
         public IReadOnlyList<AbilityItem> ItemList => itemList;
         public void RollItems() {
             itemList.Clear();
@@ -22,15 +22,6 @@ namespace Enigma.Game {
                 } while (itemList.Contains(rolledItem));
                 itemList.Add(rolledItem);
             }
-        }
-        internal void SellAbilityItem(int itemIndex, Inventory buyerInventory) {
-            int price = itemList[itemIndex].Template.Price;
-            if (buyerInventory.Gold < price) {
-                throw new ArgumentException("The given buyer inventory does have enough gold to buy the item");
-            }
-            buyerInventory.Gold -= price;
-            buyerInventory.PlaceAtFirstEmptySlot(ItemList[itemIndex]);
-            itemList[itemIndex] = null;
         }
     }
 

@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Enigma.Game {
+    public interface IRarityObject {
+        public Rarity Rarity { get; }
+    }
+
+    public enum Rarity { NotForPlayer, Common, Rare, Mythic }
+
     public abstract class RarityObjectRoller<T> where T : IRarityObject {
         static RarityObjectRoller() {
             foreach (Rarity r in Enum.GetValues(typeof(Game.Rarity))) {
@@ -43,9 +49,4 @@ namespace Enigma.Game {
             RarityListDictionary[item.Rarity].Add(item);
         }
     }
-    public interface IRarityObject {
-        public Rarity Rarity { get; }
-    }
-
-    public enum Rarity { NotForPlayer, Common, Rare, Mythic }
 }

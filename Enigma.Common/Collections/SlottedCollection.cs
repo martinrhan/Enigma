@@ -14,24 +14,22 @@ namespace Enigma.Common.Collections {
         private T[] array;
         public T this[int index] {
             get => array[index];
-            private set => array[index] = value;
+            protected set => array[index] = value;
         }
         public int Count => array.Length;
 
-        internal void IncreaseCount(int amount) {
+        protected void IncreaseCount(int amount) {
+            if (amount < 0) throw new ArgumentOutOfRangeException();
             Array.Resize(ref array, array.Length + amount);
         }
 
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)array).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        protected void Overwrite(int index, T item) {
-            this[index] = item;
-        }
-        protected void InternalExchange(int indexFrom, int indexTo) {
-            var temp = array[indexTo];
-            array[indexTo] = this[indexFrom];
-            this[indexFrom] = temp;
+        protected void InternalExchange(int indexA, int indexB) {
+            var temp = array[indexB];
+            array[indexB] = this[indexA];
+            this[indexA] = temp;
         }
         protected void ExternalExchange(int indexFrom, int indexTo, SlottedCollection<T> targetCollection) {
             var temp = targetCollection.array[indexTo];
@@ -52,6 +50,10 @@ namespace Enigma.Common.Collections {
             }
             throw new InvalidOperationException("There is no any empty slot.");
         }
-
+        protected void Clear() {
+            for (int i = 0; i<array.Length; i++) {
+                array[i] = null;
+            }
+        }
     }
 }

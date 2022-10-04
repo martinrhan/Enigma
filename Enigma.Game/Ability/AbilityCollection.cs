@@ -1,4 +1,5 @@
 ﻿using Enigma.Common.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,13 @@ namespace Enigma.Game {
 
         public AbilityCollection DeepCopy() {
             return new AbilityCollection(this.Select(ability => ability.Template.New()));
+        }
+
+        internal new void IncreaseCount(int amount) => base.IncreaseCount(amount);
+        internal void PlaceAt(int index, Ability ability) => this[index] = ability;
+        internal void RemoveAt(int index) => base[index] = null;
+        internal new void InternalExchange(int indexA, int indexB) {
+            base.InternalExchange(indexA, indexB);
         }
     }
 

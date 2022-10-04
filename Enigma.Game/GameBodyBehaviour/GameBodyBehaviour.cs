@@ -25,15 +25,16 @@ namespace Enigma.Game {
         public GameBodyMovementAction CurrentMovementAction { get; private set; }
 
         private void Update_Private(in ReturnedValue_Update_Protected returnedValue_Update, GameBody gameBody, double deltaTime) {
+            AbilityCastInputDataCollection.ResizeIfSmaller(gameBody.AbilityCollection.Count);
             AbilityCastInputDataCollection.Update(returnedValue_Update.ToSetInputDatas);
             foreach (int index in returnedValue_Update.ToStartCastingAbilityIndexes) {
-                gameBody.AbilityCollection[index].StartCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
+                gameBody.AbilityCollection[index]?.StartCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
             }
             foreach (int index in returnedValue_Update.ToCancelCastingAbilityIndexes) {
-                gameBody.AbilityCollection[index].CancelCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
+                gameBody.AbilityCollection[index]?.CancelCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
             }
             for (int index = 0; index < gameBody.AbilityCollection.Count; index++) {
-                gameBody.AbilityCollection[index].Update_Internal(gameBody, AbilityCastInputDataCollection[index], deltaTime);
+                gameBody.AbilityCollection[index]?.Update_Internal(gameBody, AbilityCastInputDataCollection[index], deltaTime);
             }
             var newMovementAction = returnedValue_Update.ToSetMovementAction;
             if (newMovementAction != null) {

@@ -10,64 +10,45 @@ namespace Enigma.Game.SourceGenerator {
     [Generator]
     public class SourceGenerator : ISourceGenerator {
         public void Initialize(GeneratorInitializationContext context) {
-            context.RegisterForSyntaxNotifications(() => new SyntaxReciever());
-
         }
 
         public void Execute(GeneratorExecutionContext context) {
-            List<TypeDeclarationSyntax> list = ((SyntaxReciever)(context.SyntaxReceiver)).TypeDeclarationSyntaxList;
-            Dictionary<string, TypeDeclarationSyntax> map = new();
+            var templateTypeSymbols =
+                context.Compilation.GlobalNamespace.
+                GetNamespaceMembers().First(ns => ns.Name == "Enigma").
+                GetNamespaceMembers().First(ns => ns.Name == "Game").
+                GetTypeMembers().Where(nts => nts.Name.EndsWith("Template"));
 
-            foreach (TypeDeclarationSyntax typeDeclarationSyntax in list) {
-                var namedTypeSymbol = context.Compilation.GetSemanticModel(typeDeclarationSyntax.SyntaxTree).GetDeclaredSymbol(typeDeclarationSyntax);
-                string typeFullName = namedTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-                if (!map.ContainsKey(typeFullName)) {
-                    map.Add(typeFullName, typeDeclarationSyntax);
-                }
-            }
-
-            foreach (TypeDeclarationSyntax typeDeclarationSyntax in list) {
-                if (typeDeclarationSyntax.Identifier.Text.EndsWith("Template")) {
-                    AddJsonObject(context, map, typeDeclarationSyntax);
-                }
+            foreach (var templateTypeSymbol in templateTypeSymbols) {
+                AddJsonObject(context, templateTypeSymbol);
             }
             context.AddSource("TestGenerated.cs", "");
         }
 
-        private readonly HashSet<string> addedJsonObjectTypes = new HashSet<string>();
+        private readonly HashSet<INamedTypeSymbol> addedTypes = new();
 
-        private void AddJsonObject(GeneratorExecutionContext context, IReadOnlyDictionary<string, TypeDeclarationSyntax> map, TypeDeclarationSyntax typeDeclarationSyntax) {
-            SemanticModel semanticModel = context.Compilation.GetSemanticModel(typeDeclarationSyntax.SyntaxTree);
-            INamedTypeSymbol namedTypeSymbol = semanticModel.GetDeclaredSymbol(typeDeclarationSyntax);
-            if (addedJsonObjectTypes.Contains(namedTypeSymbol.ToString())) {
-                return;
-            }
-            addedJsonObjectTypes.Add(namedTypeSymbol.ToString());
-            List<Names> list = new();
-            foreach (var propertyDeclarationSyntax in typeDeclarationSyntax.Members.
-                OfType<PropertyDeclarationSyntax>().
-                Where(syntax =>
-                    syntax.Modifiers.Any(token => token.IsKind(SyntaxKind.PublicKeyword)) &&
-                    !syntax.Modifiers.Any(token => token.IsKind(SyntaxKind.StaticKeyword)) &&
-                    syntax.AccessorList.Accessors.Count == 2 &&
-                    !syntax.AccessorList.Accessors[1].Modifiers.Any()
-                )
-            ) {
-                bool useId = ! propertyDeclarationSyntax.AttributeLists.Any(
-                    attributeList => {
-                        var attribute = attributeList.Attributes[0];
-                        return context.Compilation.GetSemanticModel(attribute.SyntaxTree).GetTypeInfo(attribute).Type.ToDisplayString() == typeof(DontUseIdAttribute).FullName;
-                    }
+        private void AddJsonObject(GeneratorExecutionContext context, INamedTypeSymbol templateTypeSymbol) {
+            if (addedTypes.Contains(templateTypeSymbol)) return;
+            else addedTypes.Add(templateTypeSymbol);
+
+            IEnumerable<IPropertySymbol> propertySymbols =
+                templateTypeSymbol.GetMembers().OfType<IPropertySymbol>().
+                Where(ps => ps.DeclaredAccessibility == Accessibility.Public && !ps.IsStatic && !ps.IsReadOnly);
+
+            List<CodePieces> list = new();
+            foreach (var propertySymbol in propertySymbols) {
+                bool useId = !propertySymbol.GetAttributes().Any(
+                    attributeData => attributeData.AttributeClass.Name == nameof(DontUseIdAttribute)
                 );
-                var returnedValue = GetJsonTypeCode(context, map, propertyDeclarationSyntax.Type, useId);
-                Names names = new Names();
-                names.TypeName = returnedValue.JsonTypeName;
-                names.OriginalPropertyName = propertyDeclarationSyntax.Identifier.ToString();
+                var returnedValue = GetJsonTypeCode(context, ((PropertyDeclarationSyntax)(propertySymbol.DeclaringSyntaxReferences[0].GetSyntax())).Type, useId);
+                CodePieces names = new CodePieces();
+                names.PropertyTypeName = returnedValue.JsonTypeName;
+                names.OriginalPropertyName = propertySymbol.Name;
                 names.PropertyName = returnedValue.JsonPropertyName(names.OriginalPropertyName);
-                names.TypeConvertExpression = returnedValue.JsonObjectConvertExpression(names.PropertyName);
+                names.PropertyConvertExpression = returnedValue.JsonObjectConvertExpression(names.PropertyName);
                 list.Add(names);
             }
-            string className = namedTypeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+            string className = templateTypeSymbol.Name;
             string sourceCode = $@"
 using System;
 using System.Collections.Generic;
@@ -77,13 +58,13 @@ namespace Enigma.Game.Json{{
     public class {className}JsonObject{{
         "
         + String.Join(Environment.NewLine + "        ", list.
-            Select(names => $"public {names.TypeName} {names.PropertyName} {{ get; set; }}"))
+            Select(names => $"public {names.PropertyTypeName} {names.PropertyName} {{ get; set; }}"))
         + $@"
-        public {className} Convert(){{
+        internal {className} Convert(){{
             return new {className}(){{
                 "
                 + String.Join("," + Environment.NewLine + "                ", list.
-                    Select(names => $"{names.OriginalPropertyName} = {names.TypeConvertExpression}"))
+                    Select(names => $"{names.OriginalPropertyName} = {names.PropertyConvertExpression}"))
                 + @"
             };
         }
@@ -91,15 +72,8 @@ namespace Enigma.Game.Json{{
 }";
             context.AddSource(className + "JsonObject.cs", sourceCode);
         }
-        private struct Names {
-            internal string TypeName { get; set; }
-            internal string OriginalPropertyName { get; set; }
-            internal string PropertyName { get; set; }
-            internal string TypeConvertExpression { get; set; }
-        }
 
-        private ReturnedValue_GetJsonTypeCode GetJsonTypeCode(
-            GeneratorExecutionContext context, IReadOnlyDictionary<string, TypeDeclarationSyntax> map, TypeSyntax propertyTypeSyntax, bool useId) {
+        private ReturnedValue_GetJsonTypeCode GetJsonTypeCode(GeneratorExecutionContext context, TypeSyntax propertyTypeSyntax, bool useId) {
             SemanticModel semanticModel = context.Compilation.GetSemanticModel(propertyTypeSyntax.SyntaxTree);
             TypeInfo typeInfo = semanticModel.GetTypeInfo(propertyTypeSyntax);
             string propertyTypeWrittenName = propertyTypeSyntax.ToString();
@@ -129,19 +103,19 @@ namespace Enigma.Game.Json{{
                         }
                     } else {
                         if (propertyTypeName.EndsWith("Template")) {
-                            return GetJsonTypeCode_CustomClass(context, map, propertyTypeSyntax);
+                            return GetJsonTypeCode_CustomClass(context, propertyTypeSyntax);
                         }
                         if (propertyTypeName.StartsWith("Factory<")) {
                             throw new NotSupportedException();
                         }
                     }
-                    return GetJsonTypeCode_CustomClass(context, map, propertyTypeSyntax);
+                    return GetJsonTypeCode_CustomClass(context, propertyTypeSyntax);
                 case QualifiedNameSyntax qualifiedNameSyntax:
-                    return GetJsonTypeCode_CustomClass(context, map, propertyTypeSyntax);
+                    return GetJsonTypeCode_CustomClass(context, propertyTypeSyntax);
                 case GenericNameSyntax genericNameSyntax:
                     if (genericNameSyntax.Identifier.Text == "IReadOnlyList") {
                         TypeSyntax argumentTypeSyntax = genericNameSyntax.TypeArgumentList.Arguments[0];
-                        var code = GetJsonTypeCode(context, map, argumentTypeSyntax, useId);
+                        var code = GetJsonTypeCode(context, argumentTypeSyntax, useId);
                         return new() {
                             JsonTypeName = $"{code.JsonTypeName}[]",
                             JsonPropertyName = name => name.EndsWith("List") ? code.JsonPropertyName(name.Substring(0, name.Length - 4)) + "List" : throw new InvalidOperationException(),
@@ -153,56 +127,61 @@ namespace Enigma.Game.Json{{
                 default: throw new NotSupportedException();
             }
         }
-
-        private ReturnedValue_GetJsonTypeCode GetJsonTypeCode_CustomClass(GeneratorExecutionContext context, IReadOnlyDictionary<string, TypeDeclarationSyntax> map, TypeSyntax propertyTypeSyntax) {
+        private ITypeSymbol GetTypeSymbol(GeneratorExecutionContext context, TypeSyntax typeSyntax) {
+            SemanticModel semanticModel = context.Compilation.GetSemanticModel(typeSyntax.SyntaxTree);
+            return semanticModel.GetTypeInfo(typeSyntax).Type;
+        }
+        private ReturnedValue_GetJsonTypeCode GetJsonTypeCode_CustomClass(GeneratorExecutionContext context, TypeSyntax propertyTypeSyntax) {
             SemanticModel semanticModel = context.Compilation.GetSemanticModel(propertyTypeSyntax.SyntaxTree);
             TypeInfo typeInfo = semanticModel.GetTypeInfo(propertyTypeSyntax);
             string propertyTypeWrittenName = propertyTypeSyntax.ToString();
             string propertyTypeName = typeInfo.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
             string propertyTypeFullName = typeInfo.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-            TypeDeclarationSyntax typeDeclartionSyntax;
-            if (map.TryGetValue(propertyTypeFullName, out typeDeclartionSyntax)) {
-                MethodDeclarationSyntax jsonConstructor =
-                typeDeclartionSyntax.Members.OfType<MethodDeclarationSyntax>().
-                    Where(syntax => syntax.AttributeLists.
-                        Any(
-                            attributeList => {
-                                var attribute = attributeList.Attributes[0];
-                                return context.Compilation.GetSemanticModel(attribute.SyntaxTree).GetTypeInfo(attribute).Type.ToDisplayString() == typeof(JsonConstructorAttribute).FullName;
-                            }
-                        )
-                    ).FirstOrDefault();
-                if (jsonConstructor == null) {
-                    AddJsonObject(context, map, typeDeclartionSyntax);
+            IMethodSymbol jsonConstructor =
+            typeInfo.Type.GetMembers().OfType<IMethodSymbol>().
+                Where(methodSymbol => methodSymbol.GetAttributes().
+                    Any(attributeData => attributeData.AttributeClass.Name == nameof(JsonConstructorAttribute))
+                ).
+            FirstOrDefault();
+            if (jsonConstructor == null) {
+                AddJsonObject(context, (INamedTypeSymbol)(typeInfo.Type));
+                return new() {
+                    JsonTypeName = propertyTypeName + "JsonObject",
+                    JsonPropertyName = name => name,
+                    JsonObjectConvertExpression = name => name + ".Convert()"
+                };
+            } else {
+                if (jsonConstructor.DeclaredAccessibility != Accessibility.Public) throw new InvalidOperationException();
+                if (!jsonConstructor.IsStatic) throw new InvalidOperationException();
+                if (jsonConstructor.Parameters.Length == 1) {
                     return new() {
-                        JsonTypeName = propertyTypeName + "JsonObject",
+                        JsonTypeName = jsonConstructor.Parameters[0].Type.ToString(),
                         JsonPropertyName = name => name,
-                        JsonObjectConvertExpression = name => name + ".Convert()"
+                        JsonObjectConvertExpression = name =>
+                        name == propertyTypeWrittenName ? $"{propertyTypeFullName}.{jsonConstructor.Name}({name})" : $"{propertyTypeWrittenName}.{jsonConstructor.Name}({name})"
                     };
                 } else {
-                    if (!jsonConstructor.Modifiers.Any(token => token.IsKind(SyntaxKind.PublicKeyword))) throw new InvalidOperationException();
-                    if (!jsonConstructor.Modifiers.Any(token => token.IsKind(SyntaxKind.StaticKeyword))) throw new InvalidOperationException();
-                    var syntaxList = jsonConstructor.ParameterList.Parameters;
-                    if (syntaxList.Count == 1) {
-                        return new() {
-                            JsonTypeName = syntaxList[0].Type.ToString(),
-                            JsonPropertyName = name => name,
-                            JsonObjectConvertExpression = name => name == propertyTypeWrittenName ?
-                            $"{propertyTypeFullName}.{jsonConstructor.Identifier.Text}({name})" :
-                            $"{propertyTypeWrittenName}.{jsonConstructor.Identifier.Text}({name})"
-                        };
-                    } else {
-                        throw new NotSupportedException();
-                    }
+                    throw new NotSupportedException();
                 }
-            } else {
-                throw new NotSupportedException();
             }
+        }
+
+        private struct CodePieces {
+            internal string PropertyTypeName { get; set; }
+            internal string OriginalPropertyName { get; set; }
+            internal string PropertyName { get; set; }
+            internal string PropertyConvertExpression { get; set; }
         }
 
         struct ReturnedValue_GetJsonTypeCode {
             internal string JsonTypeName { get; set; }
+            /// <summary>
+            /// Conversion from name of the property of original type to name of the property of JsonObject type
+            /// </summary>
             internal Func<string, string> JsonPropertyName { get; set; }
+            /// <summary>
+            /// Conversion from the name of the property of JsonObjectType to the Expression of converting the property to an instance of the original type.
+            /// </summary>
             internal Func<string, string> JsonObjectConvertExpression { get; set; }
         }
     }

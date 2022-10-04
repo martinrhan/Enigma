@@ -10,58 +10,33 @@
              d:DesignHeight="450" d:DesignWidth="800" Focusable="False">
     <UniformGrid Rows="1" Background="White">
         <UniformGrid.Resources>
-            <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA"/>
-            <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
-            <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA"/>
-            <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
-            <Style TargetType="ListViewItem">
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ListViewItem">
-                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsMouseOver" Value="True"/>
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
-                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
-                                </MultiTrigger>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="Selector.IsSelectionActive" Value="True"/>
-                                        <Condition Property="IsSelected" Value="True"/>
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
-                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
-                                </MultiTrigger>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+            <SolidColorBrush x:Key="SelectedActive.Background" Color="#3D26A0DA"/>
+            <SolidColorBrush x:Key="SelectedActive.Border" Color="#FF26A0DA"/>
+            <Style x:Key="ItemViewStyleBase" TargetType="Button">
+                <Setter Property="Background" Value="White"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="local:PlayerPanelView.IsSelected" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource SelectedActive.Border}"></Setter>
+                        <Setter Property="Background" Value="{StaticResource SelectedActive.Background}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
-            <Style x:Key="ItemButtonsContainerStyle" TargetType="FrameworkElement">
-                <Setter Property="Visibility" Value="Collapsed"/>
+            <Style x:Key="ItemViewStyle" TargetType="Button" BasedOn="{StaticResource ItemViewStyleBase}">
                 <Style.Triggers>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
-                                       Value="True"></Condition>
-                            <Condition Binding="{Binding (Selector.IsSelectionActive), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
-                                       Value="True"></Condition>
+                            <Condition Binding="{Binding IsSlotEmpty}" Value="False"></Condition>
+                            <Condition Binding="{Binding SelectedItemViewType,ElementName=view}" Value="{x:Static local:PlayerPanelView.ItemViewType_Shop}" ></Condition>
                         </MultiDataTrigger.Conditions>
-                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="IsEnabled" Value="False"></Setter>
                     </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
+            <Style x:Key="ShopItemViewStyle" TargetType="Button" BasedOn="{StaticResource ItemViewStyleBase}">
+                <Setter Property="IsEnabled" Value="{Binding IsSold,Converter={StaticResource InverseBoolConverter}}"></Setter>
+            </Style>
         </UniformGrid.Resources>
-        <Grid x:Name="equipmentView" DockPanel.Dock="Left" Visibility="{Binding EquipmentViewVisibility, ElementName=view}">
+        <StackPanel x:Name="equipmentView" DockPanel.Dock="Left">
             <TextBlock FontSize="36" HorizontalAlignment="Center">Equipment</TextBlock>
             <ItemsControl x:Name="itemsControl_Equipment" ItemsSource="{Binding ViewModel.EquipmentItemsViewModel,ElementName=view}">
                 <Control.Template>
@@ -71,51 +46,46 @@
                 </Control.Template>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource ItemButtonsContainerStyle}">
+                        <Button x:Name="button" Style="{StaticResource ItemViewStyle}" Click="Click_EquipmentItemView" MouseRightButtonUp="MouseRightButtonUp_EquipmentItemView">
                             <local:EquipmentAbilityItemView x:Name="equipmentAbilityItemView" ViewModel="{Binding}"/>
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Grid>
-        <Grid>
-            <Button VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Visibility,ElementName=shopView}" Click="Click_Button_Equipment">Equipment</Button>
-            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding Visibility,ElementName=equipmentView}" Click="Click_Button_Shop">Shop</Button>
-            <StackPanel>
-                <TextBlock HorizontalAlignment="Center" FontSize="36">Inventory</TextBlock>
-                <ItemsControl x:Name="itemsControl_Inventory" ItemsSource="{Binding ViewModel.InventoryItemsViewModel,ElementName=view}" Focusable="False">
-                    <Control.Template>
-                        <ControlTemplate>
-                            <StackPanel IsItemsHost="True"></StackPanel>
-                        </ControlTemplate>
-                    </Control.Template>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <ContentControl></ContentControl>
-                                <local:AbilityItemView x:Name="abilityItemView" ViewModel="{Binding}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </Grid>
-        <Grid x:Name="shopView" DockPanel.Dock="Right" Visibility="{Binding ShopViewVisibility,ElementName=view}">
-            <StackPanel>
-                <TextBlock FontSize="36" HorizontalAlignment="Center">Shop</TextBlock>
-                <ItemsControl x:Name="itemsControl_Shop" ItemsSource="{Binding ViewModel.ShopItemsViewModel,ElementName=view}" Focusable="False">
-                    <Control.Template>
-                        <ControlTemplate>
-                            <StackPanel IsItemsHost="True"></StackPanel>
-                        </ControlTemplate>
-                    </Control.Template>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                                <local:ShopAbilityItemView x:Name="shopAbilityItemView" ViewModel="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </Grid>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center" FontSize="36">Inventory</TextBlock>
+            <ItemsControl x:Name="itemsControl_Inventory" ItemsSource="{Binding ViewModel.InventoryItemsViewModel,ElementName=view}" Focusable="False">
+                <Control.Template>
+                    <ControlTemplate>
+                        <StackPanel IsItemsHost="True"></StackPanel>
+                    </ControlTemplate>
+                </Control.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="button" Style="{StaticResource ItemViewStyle}" Click="Click_InventoryItemView" MouseRightButtonUp="MouseRightButtonUp_InventoryItemView">
+                            <local:AbilityItemView x:Name="abilityItemView" ViewModel="{Binding}"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        <StackPanel x:Name="shopView" DockPanel.Dock="Right">
+            <TextBlock FontSize="36" HorizontalAlignment="Center">Shop</TextBlock>
+            <ItemsControl x:Name="itemsControl_Shop" ItemsSource="{Binding ViewModel.ShopItemsViewModel,ElementName=view}" Focusable="False">
+                <Control.Template>
+                    <ControlTemplate>
+                        <StackPanel IsItemsHost="True"></StackPanel>
+                    </ControlTemplate>
+                </Control.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="button" Style="{StaticResource ShopItemViewStyle}" Click="Click_ShopItemView">
+                            <local:ShopAbilityItemView x:Name="shopAbilityItemView" ViewModel="{Binding}"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
     </UniformGrid>
 </v:View>

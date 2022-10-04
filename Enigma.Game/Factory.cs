@@ -1,4 +1,4 @@
-﻿global using AbilityEffectComponentFactory = Enigma.Game.Factory<Enigma.Game.AbilityEffectComponentFactoryArguments, Enigma.Game.AbilityEffectComponent>;
+﻿global using AbilityEffectAssemblyFactory = Enigma.Game.Factory<Enigma.Game.AbilityEffectComponentFactoryArguments, Enigma.Game.AbilityEffectComponent>;
 global using AIGameBodyBehaviourFactory = Enigma.Game.Factory<Enigma.Game.AIGameBodyBehaviourFactoryArguments, Enigma.Game.AIGameBodyBehaviour>;
 global using EnemyWaveBehaviourFactory = Enigma.Game.Factory<Enigma.Game.EnemyWaveBehaviourFactoryArguments, Enigma.Game.EnemyWaveBehaviour>;
 using System;
