@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Enigma.Game {
-    public abstract class EnemyWaveBehaviour {
+    public abstract class EnemyWaveBehaviour : IFactoryProduct{
+        public static Expression FactoryLoadAddition(Type toLoadSubtype, ParameterExpression productExpression) {
+            return Expression.Block();
+        }
+
         private bool isStarted = false;
         internal void Update_Internal(GameWorld gameWorld, double deltaTime) {
             UpdateInterface updateInterface = new UpdateInterface(gameWorld);

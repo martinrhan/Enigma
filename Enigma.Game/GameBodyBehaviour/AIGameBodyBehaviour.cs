@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 
 namespace Enigma.Game {
-    public abstract class AIGameBodyBehaviour : GameBodyBehaviour {
+    public abstract class AIGameBodyBehaviour : GameBodyBehaviour, IFactoryProduct {
+        public static Expression FactoryLoadAddition(Type toLoadSubtype, ParameterExpression productExpression) {
+            return Expression.Block();
+        }
+
         public AIGameBodyBehaviourState State { get; internal set; } = AIGameBodyBehaviourState.FullAutonomous;
 
         public void PuppetUpdate(Action<UpdateInterface> action) {

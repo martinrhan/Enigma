@@ -25,12 +25,12 @@ namespace Enigma.GameWPF {
                 if (t.IsAssignableTo(typeof(AIGameBodyBehaviour))) {
                     var factory = Factory<AIGameBodyBehaviourFactoryArguments, AIGameBodyBehaviour>.LoadType(t, "Behaviour");
                     if (factory != null) EntityLoaderInterface.RegisterAIGameBodyBehaviourFactory(factory);
-                } else if (t.IsAssignableTo(typeof(AbilityEffectComponent))) {
-                    var factory = Factory<AbilityEffectComponentFactoryArguments, AbilityEffectComponent>.LoadType(t, "Component");
-                    if (factory != null) EntityLoaderInterface.RegisterAbilityEffectComponentFactory(factory);
                 } else if (t.IsAssignableTo(typeof(EnemyWaveBehaviour))) {
                     var factory = Factory<EnemyWaveBehaviourFactoryArguments, EnemyWaveBehaviour>.LoadType(t, "Behaviour");
                     if (factory != null) EntityLoaderInterface.RegisterEnemyWaveBehaviourFactory(factory);
+                }else if (t.IsAssignableTo(typeof(AbilityMechanism))) {
+                    var factory = Factory<AbilityMechanismFactoryArguments, AbilityMechanism>.LoadType(t, "Mechanism");
+                    if (factory != null) EntityLoaderInterface.RegisterAbilityMechanismFactory(factory);
                 }
             }
         }

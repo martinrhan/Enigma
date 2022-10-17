@@ -33,7 +33,10 @@ namespace Enigma.Game.SourceGenerator {
 
             IEnumerable<IPropertySymbol> propertySymbols =
                 templateTypeSymbol.GetMembers().OfType<IPropertySymbol>().
-                Where(ps => ps.DeclaredAccessibility == Accessibility.Public && !ps.IsStatic && !ps.IsReadOnly);
+                Where(ps => 
+                    ps.DeclaredAccessibility == Accessibility.Public && 
+                    !ps.IsStatic && !ps.IsReadOnly && ps.SetMethod.DeclaredAccessibility == Accessibility.Public
+                );
 
             List<CodePieces> list = new();
             foreach (var propertySymbol in propertySymbols) {

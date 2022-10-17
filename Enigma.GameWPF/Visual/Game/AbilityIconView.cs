@@ -36,7 +36,7 @@ namespace Enigma.GameWPF.Visual.Game {
                 iconView = New(id);
             } else {
                 string name = iconView.GetType().Name;
-                if (!name.EndsWith("IconView")) throw new ArgumentException(name + @"doesn't end with ""IconView""", nameof(iconView));
+                if (!name.EndsWith("IconView")) return;// throw new ArgumentException(name + @"doesn't end with ""IconView""", nameof(iconView));
                 if (id != name.Substring(0, name.Length - 8)) {
                     iconView = New(id);
                 }

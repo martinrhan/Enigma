@@ -28,10 +28,10 @@ namespace Enigma.Game {
             AbilityCastInputDataCollection.ResizeIfSmaller(gameBody.AbilityCollection.Count);
             AbilityCastInputDataCollection.Update(returnedValue_Update.ToSetInputDatas);
             foreach (int index in returnedValue_Update.ToStartCastingAbilityIndexes) {
-                gameBody.AbilityCollection[index]?.StartCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
+                gameBody.AbilityCollection[index]?.StartCasting();
             }
             foreach (int index in returnedValue_Update.ToCancelCastingAbilityIndexes) {
-                gameBody.AbilityCollection[index]?.CancelCasting(gameBody, AbilityCastInputDataCollection[index], deltaTime);
+                gameBody.AbilityCollection[index]?.CancelCasting();
             }
             for (int index = 0; index < gameBody.AbilityCollection.Count; index++) {
                 gameBody.AbilityCollection[index]?.Update_Internal(gameBody, AbilityCastInputDataCollection[index], deltaTime);

@@ -15,8 +15,8 @@ namespace Enigma.Game {
         public static void RegisterAIGameBodyBehaviourFactory(AIGameBodyBehaviourFactory factory) {
             AIGameBodyBehaviourFactory.Register(factory);
         }
-        public static void RegisterAbilityEffectComponentFactory(AbilityEffectComponentFactory factory) {
-            AbilityEffectComponentFactory.Register(factory);
+        public static void RegisterAbilityMechanismFactory(AbilityMechanismFactory factory) {
+            AbilityMechanismFactory.Register(factory);
         }
         public static void RegisterEnemyWaveBehaviourFactory(EnemyWaveBehaviourFactory factory) {
             EnemyWaveBehaviourFactory.Register(factory);

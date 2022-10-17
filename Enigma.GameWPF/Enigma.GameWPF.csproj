@@ -4,18 +4,9 @@
 	<OutputType>WinExe</OutputType>
 	<TargetFramework>net6.0-windows</TargetFramework>
 	<UseWPF>true</UseWPF>
-	<SignAssembly>false</SignAssembly>
-	<AssemblyName>Enigma.GameWPF</AssemblyName>
-	<RootNamespace>Enigma.GameWPF</RootNamespace>
 	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<LangVersion>preview</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	<LangVersion>preview</LangVersion>
+	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>

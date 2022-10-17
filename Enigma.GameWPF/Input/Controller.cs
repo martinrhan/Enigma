@@ -81,7 +81,7 @@ namespace Enigma.GameWPF.Input {
         public void CastAbilityAtPointerButtonHold(Point mousePosition) {
             int abilityIndex = gamePage.GameWorldViewModel.PlayerGameBodyInfoViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex;
             if (player.PlayerGameBody.AbilityCollection.Count <= abilityIndex || player.PlayerGameBody.AbilityCollection[abilityIndex] == null) return;
-            if (player.PlayerGameBody.AbilityCollection[abilityIndex].EffectAssembly.CurrentPhase.IsIdling) {
+            if (player.PlayerGameBody.AbilityCollection[abilityIndex].AbilityMechanism.CurrentStageIndex == 0) {
                 gamePage.GameWorldViewModel.UserInputCollection.ToStartCastingIndexHashSet.Add(abilityIndex);
             }
             Vector2 targetGameWorldPosition = ConvertToGameWorldPosition(mousePosition);

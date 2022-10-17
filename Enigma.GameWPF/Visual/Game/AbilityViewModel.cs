@@ -26,7 +26,7 @@ namespace Enigma.GameWPF.Visual.Game {
                 Name = model.Template.Id;
                 BindedInput = input;
                 IsSelected = isSelected;
-                AbilityPhaseStageProgressProportion = model.EffectAssembly.CurrentPhase.CurrentStageIndex == -1 ? 0 : Math.Min(1, model.EffectAssembly.CurrentPhase.CurrentStageElapsedTime / model.EffectAssembly.CurrentPhase.CurrentStage.MaxTime);
+                AbilityPhaseStageProgressProportion = 0;
                 AbilityIconView.Set(ref iconView, model.Template.Id);
             }
         }

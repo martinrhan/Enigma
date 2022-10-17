@@ -3,20 +3,6 @@
     "Id": "Flash",
     "Price": 10,
     "Size": 1,
-    "Rarity": "Common",
-    "AbilityEffectAssemblyTemplate": {
-      "PhaseTemplateList": [
-        {
-          "StageTemplateList": [
-            {
-              "CompleteComponentDataList": [
-              ],
-              "MaxTime": 0
-            }
-          ]
-        }
-      ]
-    }
+    "Rarity": "Rare"
   }
-
 ]

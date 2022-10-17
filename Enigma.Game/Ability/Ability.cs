@@ -10,25 +10,25 @@ namespace Enigma.Game {
     public class Ability {
         internal Ability(AbilityTemplate template) {
             this.Template = template;
-            EffectAssembly = template.AbilityEffectAssemblyTemplate.New();
+            AbilityMechanism = template.AbilityMechanismFactory.New(new());
         }
         public AbilityTemplate Template { get; }
         public string GivenName { get; set; }
         public int Size => Template.Size;
-        public AbilityEffectAssembly EffectAssembly { get; }
+        public AbilityMechanism AbilityMechanism { get; }
 
         public AbilityItem ConvertToAbilityItem() => new AbilityItem(Template);
 
-        internal void StartCasting(GameBody gameBody, AbilityCastInputData inputData, double deltaTime) {
-            EffectAssembly.StartCasting(gameBody, inputData, this, deltaTime);
+        internal void StartCasting() {
+            AbilityMechanism.StartCasting();
         }
 
-        internal void CancelCasting(GameBody gameBody, AbilityCastInputData inputData, double deltaTime) {
-            EffectAssembly.CancelCasting(gameBody, inputData, this, deltaTime);
+        internal void CancelCasting() {
+            AbilityMechanism.CancelCasting();
         }
 
         internal void Update_Internal(GameBody gameBody, AbilityCastInputData inputData, double deltaTime) {
-            EffectAssembly.Update_Internal(gameBody, inputData, this, deltaTime);
+            AbilityMechanism.Update_Internal(gameBody, inputData, this, deltaTime);
         }
     }
 }

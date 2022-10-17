@@ -5,6 +5,8 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
 	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 	<BaseOutputPath>$(SolutionDir)\Output</BaseOutputPath>
+	<LangVersion>preview</LangVersion>
+	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>
