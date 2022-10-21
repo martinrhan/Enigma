@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Enigma.Game.Entities.AbilityEffects {
+namespace Enigma.Game.Entities.AbilityMechanisms {
     public class ChargeSlashMechanism : AbilityMechanism {
         public double ChargedTime { get; private set; }
 

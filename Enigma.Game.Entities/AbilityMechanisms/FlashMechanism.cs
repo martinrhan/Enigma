@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Enigma.Game.Entities.AbilityEffects {
+namespace Enigma.Game.Entities.AbilityMechanisms {
     public class FlashMechanism : AbilityMechanism {
         /// <summary>
         /// The idling stage of phase0

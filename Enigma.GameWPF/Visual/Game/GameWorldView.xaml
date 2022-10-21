@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="view_Loaded" IsTabStop="False" FocusVisualStyle="{x:Null}">
     <Grid>
-        <local:GameBodyCollectionView ViewModel="{Binding ViewModel.GameBodyCollectionViewModel,ElementName=view}"></local:GameBodyCollectionView>
+        <local:GameWorldDrawingView ViewModel="{Binding ViewModel.GameWorldDrawingViewModel,ElementName=view}"></local:GameWorldDrawingView>
         <local:MinimapView ViewModel="{Binding ViewModel.MinimapViewModel,ElementName=view}" Width="200" Height="200" VerticalAlignment="Bottom" HorizontalAlignment="Right"></local:MinimapView>
         <local:PlayerGameBodyInfoView x:Name="PlayerGameBodyInfoView" ViewModel="{Binding ViewModel.PlayerGameBodyInfoViewModel,ElementName=view}" Width="200" HorizontalAlignment="Left"></local:PlayerGameBodyInfoView>
         <local:PausePanelsView ViewModel="{Binding ViewModel.PausePanelsViewModel,ElementName=view}"/>

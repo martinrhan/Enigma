@@ -25,7 +25,7 @@ namespace Enigma.GameWPF.Visual.Game {
         private readonly InputBindingManager inputBindingManager;
         public Camera Camera { get; }
 
-        public GameBodyCollectionViewModel GameBodyCollectionViewModel { get; } = new GameBodyCollectionViewModel();
+        public GameWorldDrawingViewModel GameWorldDrawingViewModel { get; } = new GameWorldDrawingViewModel();
         public MinimapViewModel MinimapViewModel { get; } = new MinimapViewModel();
         public PausePanelsViewModel PausePanelsViewModel { get; } = new PausePanelsViewModel();
         public PlayerGameBodyInfoViewModel PlayerGameBodyInfoViewModel { get; } = new PlayerGameBodyInfoViewModel();
@@ -71,14 +71,14 @@ namespace Enigma.GameWPF.Visual.Game {
                 Camera.Center = Camera.NeedMoveTo.Center;
                 Camera.NeedMoveTo = null;
             }
-            GameBodyCollectionViewModel.UpdateDataFromModel(gameWorld, Camera);
+            GameWorldDrawingViewModel.UpdateDataFromModel(gameWorld, Camera);
             MinimapViewModel.UpdateDataFromModel(gameWorld, Camera);
             PausePanelsViewModel.UpdateDataFromModel(gameWorld.EnemyWaveManager, player, inputBindingManager);
             PlayerGameBodyInfoViewModel.UpdateDataFromModel(player, inputBindingManager);
         }
 
         private void NotifyChanged() {
-            GameBodyCollectionViewModel.NotifyChanged();
+            GameWorldDrawingViewModel.NotifyChanged();
             MinimapViewModel.NotifyChanged();
             PausePanelsViewModel.NotifyChanged();
             PlayerGameBodyInfoViewModel.NotifyChanged();

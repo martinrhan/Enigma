@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Enigma.Game.Entities.AbilityEffects {
-    public class DecimateMechanism : AbilityMechanism {
+namespace Enigma.Game.Entities.AbilityMechanisms {
+    public class TeleportDartMechanism : AbilityMechanism {
         /// <summary>
         /// The idling stage of phase0
         /// </summary>

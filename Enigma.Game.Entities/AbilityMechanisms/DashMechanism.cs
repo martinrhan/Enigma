@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Enigma.Game.Extensions;
 
-namespace Enigma.Game.Entities.AbilityEffects {
+namespace Enigma.Game.Entities.AbilityMechanisms {
     public class DashMechanism : AbilityMechanism {
         /// <summary>
         /// The idling stage of phase0

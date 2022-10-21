@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.Common", "Enigma.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.Common.WPF", "Enigma.Common.WPF\Enigma.Common.WPF.csproj", "{06FE3C62-566A-4673-A005-22F054393B08}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.GameWPF.Visual.Entities", "Enigma.GameWPF.Entities\Enigma.GameWPF.Visual.Entities.csproj", "{EB69C625-0E71-4033-A3B2-9168E2CE18D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.GameWPF.VisualEntities", "Enigma.GameWPF.Entities\Enigma.GameWPF.VisualEntities.csproj", "{EB69C625-0E71-4033-A3B2-9168E2CE18D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigma.Test", "Enigma.Test\Enigma.Test.csproj", "{630E6C9D-B844-490F-A371-34D7437ED2CF}"
 EndProject
