@@ -16,13 +16,14 @@ namespace Enigma.Game {
         internal PlayerBehaviourUpdateData UpdateData = new PlayerBehaviourUpdateData();
 
         private protected override ReturnedValue_Update_Protected Update_Protected(GameBody gameBody) {
-            ReturnedValue_Update_Protected result = new (UpdateData.ToStartCastingAbilityIndexes, UpdateData.ToCancelCastingAbilityIndexes, UpdateData.ToSetInputDatas, UpdateData.ToSetMovementAction);
+            ReturnedValue_Update_Protected result = new(UpdateData.FocusedAbilityIndex, UpdateData.ToStartCastingAbilityIndexes, UpdateData.ToCancelCastingAbilityIndexes, UpdateData.ToSetInputDatas, UpdateData.ToSetMovementAction);
             return result;
         }
 
     }
 
     public class PlayerBehaviourUpdateData {
+        public int FocusedAbilityIndex { get; init; } = -1;
         public int[] ToStartCastingAbilityIndexes { get; init; } = new int[0];
         public int[] ToCancelCastingAbilityIndexes { get; init; } = new int[0];
         public ValueTuple<int, AbilityCastInputData>[] ToSetInputDatas { get; init; } = new ValueTuple<int, AbilityCastInputData>[0];

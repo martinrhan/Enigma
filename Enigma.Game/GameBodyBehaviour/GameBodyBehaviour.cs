@@ -8,16 +8,18 @@ namespace Enigma.Game {
             Update_Private(Update_Protected(gameBody), gameBody, deltaTime);
         }
         protected readonly struct ReturnedValue_Update_Protected {
-            internal ReturnedValue_Update_Protected(int[] toStartCastingAbilityIndexes, int[] toCancelCastingAbilityIndexes, ValueTuple<int, AbilityCastInputData>[] toSetInputDatas, Tuple<GameBodyMovementAction> toSetMovementAction) {
+            internal ReturnedValue_Update_Protected(int focusedAbilityIndex,int[] toStartCastingAbilityIndexes, int[] toCancelCastingAbilityIndexes, ValueTuple<int, AbilityCastInputData>[] toSetInputDatas, Tuple<GameBodyMovementAction> toSetMovementAction) {
+                FocusedAbilityIndex = focusedAbilityIndex;
                 ToStartCastingAbilityIndexes = toStartCastingAbilityIndexes;
                 ToCancelCastingAbilityIndexes = toCancelCastingAbilityIndexes;
                 ToSetInputDatas = toSetInputDatas;
                 ToSetMovementAction = toSetMovementAction;
             }
+            internal readonly int FocusedAbilityIndex;
             internal readonly int[] ToStartCastingAbilityIndexes;
             internal readonly int[] ToCancelCastingAbilityIndexes;
             internal readonly ValueTuple<int, AbilityCastInputData>[] ToSetInputDatas;
-            internal readonly Tuple<GameBodyMovementAction> ToSetMovementAction;
+            internal readonly Tuple<GameBodyMovementAction> ToSetMovementAction;//null means no change, tuple of null means set to no action.
         }
         private protected abstract ReturnedValue_Update_Protected Update_Protected(GameBody gameBody);
 

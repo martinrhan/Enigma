@@ -9,7 +9,7 @@ namespace Enigma.Game {
             return Expression.Block();
         }
 
-        public AIGameBodyBehaviourState State { get; internal set; } = AIGameBodyBehaviourState.FullAutonomous;
+        public AIGameBodyBehaviourMode Mode { get; internal set; } = AIGameBodyBehaviourMode.Autonomous;
 
         public void PuppetUpdate(Action<UpdateInterface> action) {
             this.action = action;
@@ -20,16 +20,16 @@ namespace Enigma.Game {
         private protected override ReturnedValue_Update_Protected Update_Protected(GameBody gameBody) {
             UpdateInterface updateInterface = new UpdateInterface(gameBody);
             if (!isStarted) {
-                if (State != AIGameBodyBehaviourState.Puppet) Start(updateInterface);
+                if (Mode != AIGameBodyBehaviourMode.Puppet) Start(updateInterface);
                 isStarted = true;
             }
-            if (State == AIGameBodyBehaviourState.Puppet) {
+            if (Mode == AIGameBodyBehaviourMode.Puppet) {
                 if (action != null) {
                     action(updateInterface);
                     action = null;
                 }
             } else Update(updateInterface);
-            return new(updateInterface.ToStartCastingAbilityIndexes, updateInterface.ToCancelCastingAbilityIndexes, updateInterface.ToSetInputDatas, updateInterface.ToSetMovementAction);
+            return new(updateInterface.FocusedAbilityIndex,updateInterface.ToStartCastingAbilityIndexes, updateInterface.ToCancelCastingAbilityIndexes, updateInterface.ToSetInputDatas, updateInterface.ToSetMovementAction);
         }
         protected abstract void Start(UpdateInterface updateInterface);
         protected abstract void Update(UpdateInterface updateInterface);
@@ -39,6 +39,7 @@ namespace Enigma.Game {
                 this.GameBody = gameBody;
             }
             public GameBody GameBody { get; }
+            public int FocusedAbilityIndex = -1;
             public int[] ToStartCastingAbilityIndexes { get; set; } = new int[0];
             public int[] ToCancelCastingAbilityIndexes { get; set; } = new int[0];
             public ValueTuple<int, AbilityCastInputData>[] ToSetInputDatas { get; set; } = new ValueTuple<int, AbilityCastInputData>[0];
@@ -59,6 +60,6 @@ namespace Enigma.Game {
         public double MovementDistance { get; }
     }
 
-    public enum AIGameBodyBehaviourState { FullAutonomous, SemiAutonomous, Puppet }
+    public enum AIGameBodyBehaviourMode { Autonomous, Hybrid, Puppet }
 }
 
