@@ -63,7 +63,7 @@ namespace Enigma.GameWPF.Input {
             },
             new InputAction() {
                 Id = "Exit",
-                DownAction = (c,m) =>  c.ToggleGamePause(),
+                DownAction = (c,m) =>  c.Exit(),
                 HoldAction = (c,m) => { },
                 UpAction = (c,m) => { }
             }

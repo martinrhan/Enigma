@@ -17,6 +17,9 @@
             </ControlTemplate>
         </TabControl.Template>
         <TabItem>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Paused</TextBlock>
+        </TabItem>
+        <TabItem>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding InventoryViewLeftMargin,ElementName=view}"></ColumnDefinition>
@@ -27,9 +30,6 @@
         </TabItem>
         <TabItem>
             <local:EnemyWaveManagerView ViewModel="{Binding ViewModel.EnemyWaveManagerViewModel,ElementName=view}"></local:EnemyWaveManagerView>
-        </TabItem>
-        <TabItem>
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Paused</TextBlock>
         </TabItem>
     </TabControl>
 </v:View>

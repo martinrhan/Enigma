@@ -57,6 +57,7 @@ namespace Enigma.GameWPF.Visual.Game {
         private PlayerBehaviourUpdateData[] GetPlayerBehaviourUpdateData() {
             var result = new PlayerBehaviourUpdateData[] {
                 new PlayerBehaviourUpdateData() {
+                    FocusedAbilityIndex = PlayerGameBodyInfoViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex,
                     ToStartCastingAbilityIndexes = UserInputCollection.ToStartCastingIndexHashSet.ToArray(),
                     ToCancelCastingAbilityIndexes = UserInputCollection.ToCancelCastingIndexHashSet.ToArray(),
                     ToSetInputDatas = UserInputCollection.ToSetInputDataDictionary.Select(p => (p.Key, p.Value)).ToArray(),

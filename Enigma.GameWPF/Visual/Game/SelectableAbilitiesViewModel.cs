@@ -11,7 +11,7 @@ namespace Enigma.GameWPF.Visual.Game {
         public SelectableAbilitiesViewModel() {
         }
 
-        public int SelectedAbilityIndex { get; set; }
+        public int SelectedAbilityIndex { get; set; } = -1;
 
         public void UpdateDataFromModel(AbilityCollection abilityCollection, InputBindingManager inputBindingManager) {
             UpdateDataFromModel_Protected(

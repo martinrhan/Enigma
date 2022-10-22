@@ -15,9 +15,9 @@ namespace Enigma.GameWPF.Visual.Game {
         public EnemyWaveManagerViewModel EnemyWaveManagerViewModel { get; } = new EnemyWaveManagerViewModel();
         public PlayerPanelViewModel PlayerPanelViewModel { get; } = new PlayerPanelViewModel();
 
-        private const int InventoryTabIndex = 0;
-        private const int EnemyWaveManagerTabIndex = 1;
-        private const int MenuTabIndex = 2;
+        public const int MenuTabIndex = 0;
+        public const int InventoryTabIndex = 1;
+        public const int EnemyWaveManagerTabIndex = 2;
 
         private int selectedIndex = InventoryTabIndex;
         public int SelectedIndex {
@@ -40,34 +40,38 @@ namespace Enigma.GameWPF.Visual.Game {
 
         public bool IsPaused => Visibility == Visibility.Visible;
 
-        public void SelectInventory() {
-            if (visibility == Visibility.Visible) {
+        public void SelectMenu() {
+            if (IsPaused) {
                 if (selectedIndex != MenuTabIndex) {
-                    if (selectedIndex == InventoryTabIndex) {
-                        Visibility = Visibility.Collapsed;
-                    } else {
-                        SelectedIndex = InventoryTabIndex;
-                    }
+                    SelectedIndex = MenuTabIndex;
+                }
+            } else {
+                SelectedIndex = MenuTabIndex;
+                Visibility = Visibility.Visible;
+            }
+        }
+        public void SelectInventory() {
+            if (IsPaused) {
+                if (selectedIndex != MenuTabIndex) {
+                    SelectedIndex = InventoryTabIndex;
                 }
             } else {
                 SelectedIndex = InventoryTabIndex;
                 Visibility = Visibility.Visible;
             }
         }
-
         public void SelectEnemyWaveManager() {
-            if (visibility == Visibility.Visible) {
+            if (IsPaused) {
                 if (selectedIndex != MenuTabIndex) {
-                    if (selectedIndex == EnemyWaveManagerTabIndex) {
-                        Visibility = Visibility.Collapsed;
-                    } else {
-                        SelectedIndex = EnemyWaveManagerTabIndex;
-                    }
+                    SelectedIndex = EnemyWaveManagerTabIndex;
                 }
             } else {
                 SelectedIndex = EnemyWaveManagerTabIndex;
                 Visibility = Visibility.Visible;
             }
+        }
+        public void Close() {
+            Visibility = Visibility.Collapsed;
         }
 
         public void UpdateDataFromModel(EnemyWaveManager enemyWaveManager, Player player, InputBindingManager inputBindingManager) {

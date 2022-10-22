@@ -71,7 +71,7 @@ namespace Enigma.GameWPF.Input {
         private Vector2 ConvertToGameWorldPosition(in Point point) {
             Camera camera = gamePage.GameWorldViewModel.Camera;
             double gameWorldRelativePositionX = point.X * camera.Width / gamePage.ActualWidth;
-            double actualMouseY = gamePage.ActualHeight - point.Y;//the WPF's origin is top left while the gameworld's origin is bottum left.
+            double actualMouseY = gamePage.ActualHeight - point.Y;//the WPF's origin is top left while the gameworld's origin is bottom left.
             double gameWorldRelativePositionY = actualMouseY * camera.Height / gamePage.ActualHeight;
             return new(camera.LowerBound.X + gameWorldRelativePositionX, camera.LowerBound.Y + gameWorldRelativePositionY);
         }
@@ -80,7 +80,7 @@ namespace Enigma.GameWPF.Input {
         }
         public void CastAbilityAtPointerButtonHold(Point mousePosition) {
             int abilityIndex = gamePage.GameWorldViewModel.PlayerGameBodyInfoViewModel.SelectableAbilitiesViewModel.SelectedAbilityIndex;
-            if (player.PlayerGameBody.AbilityCollection.Count <= abilityIndex || player.PlayerGameBody.AbilityCollection[abilityIndex] == null) return;
+            if (abilityIndex == -1 || player.PlayerGameBody.AbilityCollection.Count <= abilityIndex || player.PlayerGameBody.AbilityCollection[abilityIndex] == null) return;
             if (player.PlayerGameBody.AbilityCollection[abilityIndex].AbilityMechanism.CurrentStageIndex == 0) {
                 gamePage.GameWorldViewModel.UserInputCollection.ToStartCastingIndexHashSet.Add(abilityIndex);
             }
@@ -97,13 +97,25 @@ namespace Enigma.GameWPF.Input {
             gamePage.GameWorldViewModel.Camera.NeedMoveTo = gamePage.GameWorldViewModel.player.PlayerGameBody; // Cannot directly set Camera.Center by PlayerGameBody.Center because the GameWorld may be updating
         }
         public void ToggleEnemyWaveManager() {
-            gamePage.GameWorldViewModel.PausePanelsViewModel.SelectEnemyWaveManager();
+            if (gamePage.GameWorldViewModel.PausePanelsViewModel.IsPaused && gamePage.GameWorldViewModel.PausePanelsViewModel.SelectedIndex == PausePanelsViewModel.EnemyWaveManagerTabIndex) {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.Close();
+            } else {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.SelectEnemyWaveManager();
+            }
         }
         public void ToggleInventory() {
-            gamePage.GameWorldViewModel.PausePanelsViewModel.SelectInventory();
+            if (gamePage.GameWorldViewModel.PausePanelsViewModel.IsPaused && gamePage.GameWorldViewModel.PausePanelsViewModel.SelectedIndex == PausePanelsViewModel.InventoryTabIndex) {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.Close();
+            } else {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.SelectInventory();
+            }
         }
-        public void ToggleGamePause() {
-            return;
+        public void Exit() {
+            if (gamePage.GameWorldViewModel.PausePanelsViewModel.IsPaused) {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.Close();
+            } else {
+                gamePage.GameWorldViewModel.PausePanelsViewModel.SelectMenu();
+            }
         }
     }
 }
